@@ -10,9 +10,60 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <COMReference Include="KeysightGPIBLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>0e939d26-a90c-11d4-98e4-00108301cb39</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="{24f10ea9-414a-11d4-98d1-00108301cb39}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>24f10ea9-414a-11d4-98d1-00108301cb39</Guid>
+    </COMReference>
+    <COMReference Include="BASICFORMATTEDIOLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>14</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <Guid>709f7ec2-ab81-11d4-98e6-00108301cb39</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VisaComLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>14</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <Guid>db8cbf00-d6d3-11d4-aa51-00a024ee30bd</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="KeysightRMLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>36f6e2f6-a9ce-11d4-98e5-00108301cb39</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OmicronLab.VectorNetworkAnalysis.AutomationInterface" Version="3.50.2913" />
+    <PackageReference Include="OmicronLab.VectorNetworkAnalysis.MidLayer" Version="3.50.2913" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.0-rc.1.24431.7" />
   </ItemGroup>
 
   <ItemGroup>
