@@ -27,6 +27,8 @@ Partial Class Form1
         SettingToolStripMenuItem = New ToolStripMenuItem()
         HelpToolStripMenuItem = New ToolStripMenuItem()
         StatusStrip_Main = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        ToolStripStatusLabel_Status = New ToolStripStatusLabel()
         TableLayoutPanel_Main = New TableLayoutPanel()
         TableLayoutPanel14 = New TableLayoutPanel()
         Label21 = New Label()
@@ -35,39 +37,41 @@ Partial Class Form1
         TabControl_Main = New TabControl()
         TabPage3 = New TabPage()
         TableLayoutPanel17 = New TableLayoutPanel()
+        Button6 = New Button()
         TableLayoutPanel26 = New TableLayoutPanel()
         Label32 = New Label()
         Label33 = New Label()
         TableLayoutPanel27 = New TableLayoutPanel()
-        Label35 = New Label()
-        Button5 = New Button()
+        Label_DefaultDIR = New Label()
+        Button_DefaultDIR = New Button()
         Label34 = New Label()
         TableLayoutPanel22 = New TableLayoutPanel()
         Label26 = New Label()
         Label27 = New Label()
         TableLayoutPanel23 = New TableLayoutPanel()
-        TextBox9 = New TextBox()
-        TextBox5 = New TextBox()
+        Button_VNASetupCheck = New Button()
+        TextBox_VNAStopFrequency = New TextBox()
+        TextBox_VNAStartFrequency = New TextBox()
         Label28 = New Label()
         Label29 = New Label()
-        ComboBox1 = New ComboBox()
-        ComboBox2 = New ComboBox()
+        ComboBox_VNAStartFrequencyUnit = New ComboBox()
+        ComboBox_VNAStopFrequencyUnit = New ComboBox()
         TableLayoutPanel24 = New TableLayoutPanel()
         Label31 = New Label()
         Label30 = New Label()
         TableLayoutPanel25 = New TableLayoutPanel()
-        RadioButton1 = New RadioButton()
-        RadioButton2 = New RadioButton()
-        ComboBox3 = New ComboBox()
+        RadioButton_VNASweepLinear = New RadioButton()
+        RadioButton_VNASweepLog = New RadioButton()
+        ComboBox_VNANumberOfPoints = New ComboBox()
         Label25 = New Label()
         Label9 = New Label()
         TableLayoutPanel18 = New TableLayoutPanel()
         Label4 = New Label()
         Label5 = New Label()
-        Button1 = New Button()
-        Button2 = New Button()
-        Button3 = New Button()
-        Button4 = New Button()
+        Button_VNACalOPEN = New Button()
+        Button_VNACalSHORT = New Button()
+        Button_VNACalLOAD = New Button()
+        Button_VNALoadCalFile = New Button()
         Label6 = New Label()
         TableLayoutPanel19 = New TableLayoutPanel()
         Label8 = New Label()
@@ -76,8 +80,8 @@ Partial Class Form1
         ComboBox_PWRCH = New ComboBox()
         Label10 = New Label()
         Label11 = New Label()
-        TextBox1 = New TextBox()
-        Button_CHECKPWR = New Button()
+        TextBox_PWRCC = New TextBox()
+        Button_PWRSetupCheck = New Button()
         TableLayoutPanel21 = New TableLayoutPanel()
         Label14 = New Label()
         Label15 = New Label()
@@ -85,10 +89,10 @@ Partial Class Form1
         Label17 = New Label()
         Label22 = New Label()
         Label23 = New Label()
-        Label24 = New Label()
-        TextBox2 = New TextBox()
-        TextBox3 = New TextBox()
-        TextBox4 = New TextBox()
+        Label_PWRStep = New Label()
+        TextBox_PWRBiasStart = New TextBox()
+        TextBox_PWRBiasStop = New TextBox()
+        TextBox_PWRCount = New TextBox()
         TabPage1 = New TabPage()
         TableLayoutPanel_PS = New TableLayoutPanel()
         GroupBox1 = New GroupBox()
@@ -148,6 +152,7 @@ Partial Class Form1
         Button_CONN_PWRSPL = New Button()
         TextBox_ADDR_PWRSPL = New TextBox()
         MenuStrip_Main.SuspendLayout()
+        StatusStrip_Main.SuspendLayout()
         TableLayoutPanel_Main.SuspendLayout()
         TableLayoutPanel14.SuspendLayout()
         TabControl_Main.SuspendLayout()
@@ -219,11 +224,24 @@ Partial Class Form1
         ' 
         StatusStrip_Main.Font = New Font("Malgun Gothic", 11F)
         StatusStrip_Main.ImageScalingSize = New Size(24, 24)
-        StatusStrip_Main.Location = New Point(0, 822)
+        StatusStrip_Main.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel_Status})
+        StatusStrip_Main.Location = New Point(0, 807)
         StatusStrip_Main.Name = "StatusStrip_Main"
-        StatusStrip_Main.Size = New Size(1178, 22)
+        StatusStrip_Main.Size = New Size(1178, 37)
         StatusStrip_Main.TabIndex = 1
         StatusStrip_Main.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(0, 30)
+        ' 
+        ' ToolStripStatusLabel_Status
+        ' 
+        ToolStripStatusLabel_Status.Name = "ToolStripStatusLabel_Status"
+        ToolStripStatusLabel_Status.Size = New Size(75, 30)
+        ToolStripStatusLabel_Status.Text = "Status"
+        ToolStripStatusLabel_Status.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TableLayoutPanel_Main
         ' 
@@ -231,18 +249,17 @@ Partial Class Form1
         TableLayoutPanel_Main.ColumnCount = 1
         TableLayoutPanel_Main.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
         TableLayoutPanel_Main.Controls.Add(TableLayoutPanel14, 0, 1)
-        TableLayoutPanel_Main.Controls.Add(TabControl_Main, 0, 3)
+        TableLayoutPanel_Main.Controls.Add(TabControl_Main, 0, 2)
         TableLayoutPanel_Main.Controls.Add(TableLayoutPanel13, 0, 0)
         TableLayoutPanel_Main.Dock = DockStyle.Fill
         TableLayoutPanel_Main.Location = New Point(0, 38)
         TableLayoutPanel_Main.Name = "TableLayoutPanel_Main"
-        TableLayoutPanel_Main.RowCount = 5
-        TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
+        TableLayoutPanel_Main.RowCount = 4
         TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
         TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
         TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
-        TableLayoutPanel_Main.Size = New Size(1178, 784)
+        TableLayoutPanel_Main.RowStyles.Add(New RowStyle(SizeType.Absolute, 30F))
+        TableLayoutPanel_Main.Size = New Size(1178, 769)
         TableLayoutPanel_Main.TabIndex = 2
         ' 
         ' TableLayoutPanel14
@@ -283,9 +300,8 @@ Partial Class Form1
         Button_CONN_VNA.Name = "Button_CONN_VNA"
         Button_CONN_VNA.Size = New Size(198, 37)
         Button_CONN_VNA.TabIndex = 1
-        Button_CONN_VNA.Text = "CONNECT"
+        Button_CONN_VNA.Text = "VNA CONNECT"
         Button_CONN_VNA.UseVisualStyleBackColor = False
-        Button_CONN_VNA.Visible = False
         ' 
         ' TextBox_ADDR_VNA
         ' 
@@ -304,10 +320,10 @@ Partial Class Form1
         TabControl_Main.Controls.Add(TabPage1)
         TabControl_Main.Controls.Add(TabPage2)
         TabControl_Main.Dock = DockStyle.Fill
-        TabControl_Main.Location = New Point(3, 138)
+        TabControl_Main.Location = New Point(3, 93)
         TabControl_Main.Name = "TabControl_Main"
         TabControl_Main.SelectedIndex = 0
-        TabControl_Main.Size = New Size(1172, 598)
+        TabControl_Main.Size = New Size(1172, 643)
         TabControl_Main.TabIndex = 0
         ' 
         ' TabPage3
@@ -317,7 +333,7 @@ Partial Class Form1
         TabPage3.Location = New Point(4, 39)
         TabPage3.Name = "TabPage3"
         TabPage3.Padding = New Padding(3)
-        TabPage3.Size = New Size(1164, 555)
+        TabPage3.Size = New Size(1164, 600)
         TabPage3.TabIndex = 2
         TabPage3.Text = "Measuer Plan 1"
         TabPage3.UseVisualStyleBackColor = True
@@ -326,35 +342,51 @@ Partial Class Form1
         ' 
         TableLayoutPanel17.ColumnCount = 1
         TableLayoutPanel17.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanel17.Controls.Add(Button6, 0, 7)
         TableLayoutPanel17.Controls.Add(TableLayoutPanel26, 0, 6)
-        TableLayoutPanel17.Controls.Add(TableLayoutPanel22, 0, 4)
-        TableLayoutPanel17.Controls.Add(Label25, 0, 5)
-        TableLayoutPanel17.Controls.Add(Label9, 0, 3)
-        TableLayoutPanel17.Controls.Add(TableLayoutPanel18, 0, 0)
-        TableLayoutPanel17.Controls.Add(Label6, 0, 1)
-        TableLayoutPanel17.Controls.Add(TableLayoutPanel19, 0, 2)
+        TableLayoutPanel17.Controls.Add(TableLayoutPanel22, 0, 2)
+        TableLayoutPanel17.Controls.Add(Label25, 0, 3)
+        TableLayoutPanel17.Controls.Add(Label9, 0, 1)
+        TableLayoutPanel17.Controls.Add(TableLayoutPanel18, 0, 4)
+        TableLayoutPanel17.Controls.Add(Label6, 0, 5)
+        TableLayoutPanel17.Controls.Add(TableLayoutPanel19, 0, 0)
         TableLayoutPanel17.Dock = DockStyle.Fill
         TableLayoutPanel17.Location = New Point(3, 3)
         TableLayoutPanel17.Margin = New Padding(0)
         TableLayoutPanel17.Name = "TableLayoutPanel17"
         TableLayoutPanel17.RowCount = 8
+        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 152F))
+        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 12F))
+        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 152F))
+        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 12F))
         TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 50F))
         TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 12F))
         TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 152F))
-        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 12F))
-        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 152F))
-        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 12F))
-        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 152F))
         TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel17.Size = New Size(1156, 547)
+        TableLayoutPanel17.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel17.Size = New Size(1156, 592)
         TableLayoutPanel17.TabIndex = 0
+        ' 
+        ' Button6
+        ' 
+        Button6.BackColor = Color.Lime
+        Button6.Dock = DockStyle.Fill
+        Button6.Font = New Font("Malgun Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(129))
+        Button6.Location = New Point(1, 543)
+        Button6.Margin = New Padding(1)
+        Button6.Name = "Button6"
+        Button6.Size = New Size(1154, 48)
+        Button6.TabIndex = 7
+        Button6.Text = "GO"
+        Button6.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel26
         ' 
         TableLayoutPanel26.BackColor = Color.AliceBlue
-        TableLayoutPanel26.ColumnCount = 2
+        TableLayoutPanel26.ColumnCount = 3
         TableLayoutPanel26.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 50F))
         TableLayoutPanel26.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanel26.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel26.Controls.Add(Label32, 1, 0)
         TableLayoutPanel26.Controls.Add(Label33, 0, 0)
         TableLayoutPanel26.Controls.Add(TableLayoutPanel27, 1, 1)
@@ -378,7 +410,7 @@ Partial Class Form1
         Label32.Location = New Point(50, 0)
         Label32.Margin = New Padding(0)
         Label32.Name = "Label32"
-        Label32.Size = New Size(1106, 50)
+        Label32.Size = New Size(906, 50)
         Label32.TabIndex = 2
         Label32.Text = "Directory/File Setup"
         Label32.TextAlign = ContentAlignment.MiddleLeft
@@ -402,44 +434,46 @@ Partial Class Form1
         ' 
         TableLayoutPanel27.BackColor = Color.Transparent
         TableLayoutPanel27.ColumnCount = 2
+        TableLayoutPanel26.SetColumnSpan(TableLayoutPanel27, 2)
         TableLayoutPanel27.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 220F))
         TableLayoutPanel27.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
-        TableLayoutPanel27.Controls.Add(Label35, 1, 0)
-        TableLayoutPanel27.Controls.Add(Button5, 0, 0)
+        TableLayoutPanel27.Controls.Add(Label_DefaultDIR, 2, 0)
+        TableLayoutPanel27.Controls.Add(Button_DefaultDIR, 0, 0)
         TableLayoutPanel27.Dock = DockStyle.Fill
         TableLayoutPanel27.Location = New Point(50, 50)
         TableLayoutPanel27.Margin = New Padding(0)
         TableLayoutPanel27.Name = "TableLayoutPanel27"
         TableLayoutPanel27.RowCount = 1
         TableLayoutPanel27.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
+        TableLayoutPanel27.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
         TableLayoutPanel27.Size = New Size(1106, 50)
         TableLayoutPanel27.TabIndex = 3
         ' 
-        ' Label35
+        ' Label_DefaultDIR
         ' 
-        Label35.AutoSize = True
-        Label35.BackColor = Color.White
-        Label35.BorderStyle = BorderStyle.FixedSingle
-        Label35.Dock = DockStyle.Fill
-        Label35.Location = New Point(223, 0)
-        Label35.Name = "Label35"
-        Label35.Size = New Size(880, 50)
-        Label35.TabIndex = 1
-        Label35.Text = "Label35"
-        Label35.TextAlign = ContentAlignment.MiddleRight
+        Label_DefaultDIR.AutoSize = True
+        Label_DefaultDIR.BackColor = Color.White
+        Label_DefaultDIR.BorderStyle = BorderStyle.FixedSingle
+        Label_DefaultDIR.Dock = DockStyle.Fill
+        Label_DefaultDIR.Location = New Point(223, 0)
+        Label_DefaultDIR.Name = "Label_DefaultDIR"
+        Label_DefaultDIR.Size = New Size(880, 50)
+        Label_DefaultDIR.TabIndex = 1
+        Label_DefaultDIR.Text = "Label35"
+        Label_DefaultDIR.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Button5
+        ' Button_DefaultDIR
         ' 
-        Button5.BackColor = Color.White
-        Button5.Dock = DockStyle.Fill
-        Button5.FlatAppearance.BorderSize = 3
-        Button5.FlatStyle = FlatStyle.Flat
-        Button5.Location = New Point(3, 3)
-        Button5.Name = "Button5"
-        Button5.Size = New Size(214, 44)
-        Button5.TabIndex = 2
-        Button5.Text = "Default Driectory"
-        Button5.UseVisualStyleBackColor = False
+        Button_DefaultDIR.BackColor = Color.White
+        Button_DefaultDIR.Dock = DockStyle.Fill
+        Button_DefaultDIR.FlatAppearance.BorderSize = 3
+        Button_DefaultDIR.FlatStyle = FlatStyle.Flat
+        Button_DefaultDIR.Location = New Point(3, 3)
+        Button_DefaultDIR.Name = "Button_DefaultDIR"
+        Button_DefaultDIR.Size = New Size(214, 44)
+        Button_DefaultDIR.TabIndex = 2
+        Button_DefaultDIR.Text = "Default Driectory"
+        Button_DefaultDIR.UseVisualStyleBackColor = False
         ' 
         ' Label34
         ' 
@@ -448,7 +482,7 @@ Partial Class Form1
         Label34.Dock = DockStyle.Fill
         Label34.Location = New Point(53, 100)
         Label34.Name = "Label34"
-        Label34.Size = New Size(1100, 50)
+        Label34.Size = New Size(900, 50)
         Label34.TabIndex = 4
         Label34.Text = "File Name Rule : 202XXXXX_BiasV.csv"
         Label34.TextAlign = ContentAlignment.MiddleLeft
@@ -464,7 +498,7 @@ Partial Class Form1
         TableLayoutPanel22.Controls.Add(TableLayoutPanel23, 1, 1)
         TableLayoutPanel22.Controls.Add(TableLayoutPanel24, 1, 2)
         TableLayoutPanel22.Dock = DockStyle.Fill
-        TableLayoutPanel22.Location = New Point(0, 226)
+        TableLayoutPanel22.Location = New Point(0, 164)
         TableLayoutPanel22.Margin = New Padding(0)
         TableLayoutPanel22.Name = "TableLayoutPanel22"
         TableLayoutPanel22.RowCount = 4
@@ -499,7 +533,7 @@ Partial Class Form1
         Label27.Name = "Label27"
         Label27.Size = New Size(50, 50)
         Label27.TabIndex = 1
-        Label27.Text = "3"
+        Label27.Text = "2"
         Label27.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' TableLayoutPanel23
@@ -508,20 +542,20 @@ Partial Class Form1
         TableLayoutPanel23.ColumnCount = 9
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 100F))
-        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 80F))
+        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 100F))
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 100F))
-        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 80F))
-        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 100F))
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20F))
         TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
-        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20F))
-        TableLayoutPanel23.Controls.Add(TextBox9, 4, 0)
-        TableLayoutPanel23.Controls.Add(TextBox5, 1, 0)
+        TableLayoutPanel23.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 150F))
+        TableLayoutPanel23.Controls.Add(Button_VNASetupCheck, 8, 0)
+        TableLayoutPanel23.Controls.Add(TextBox_VNAStopFrequency, 4, 0)
+        TableLayoutPanel23.Controls.Add(TextBox_VNAStartFrequency, 1, 0)
         TableLayoutPanel23.Controls.Add(Label28, 0, 0)
         TableLayoutPanel23.Controls.Add(Label29, 3, 0)
-        TableLayoutPanel23.Controls.Add(ComboBox1, 2, 0)
-        TableLayoutPanel23.Controls.Add(ComboBox2, 5, 0)
+        TableLayoutPanel23.Controls.Add(ComboBox_VNAStartFrequencyUnit, 2, 0)
+        TableLayoutPanel23.Controls.Add(ComboBox_VNAStopFrequencyUnit, 5, 0)
         TableLayoutPanel23.Dock = DockStyle.Fill
         TableLayoutPanel23.Location = New Point(50, 50)
         TableLayoutPanel23.Margin = New Padding(0)
@@ -531,29 +565,45 @@ Partial Class Form1
         TableLayoutPanel23.Size = New Size(1106, 50)
         TableLayoutPanel23.TabIndex = 3
         ' 
-        ' TextBox9
+        ' Button_VNASetupCheck
         ' 
-        TextBox9.BorderStyle = BorderStyle.FixedSingle
-        TextBox9.Font = New Font("Malgun Gothic", 14F)
-        TextBox9.Location = New Point(582, 2)
-        TextBox9.Margin = New Padding(2)
-        TextBox9.Name = "TextBox9"
-        TextBox9.Size = New Size(96, 45)
-        TextBox9.TabIndex = 9
-        TextBox9.Text = "20"
-        TextBox9.TextAlign = HorizontalAlignment.Right
+        Button_VNASetupCheck.BackColor = Color.LimeGreen
+        Button_VNASetupCheck.Dock = DockStyle.Fill
+        Button_VNASetupCheck.FlatAppearance.BorderColor = Color.Black
+        Button_VNASetupCheck.FlatAppearance.BorderSize = 3
+        Button_VNASetupCheck.FlatStyle = FlatStyle.Flat
+        Button_VNASetupCheck.ForeColor = Color.Black
+        Button_VNASetupCheck.Location = New Point(957, 1)
+        Button_VNASetupCheck.Margin = New Padding(1)
+        Button_VNASetupCheck.Name = "Button_VNASetupCheck"
+        Button_VNASetupCheck.Size = New Size(148, 48)
+        Button_VNASetupCheck.TabIndex = 12
+        Button_VNASetupCheck.Text = "CHECK"
+        Button_VNASetupCheck.UseVisualStyleBackColor = False
         ' 
-        ' TextBox5
+        ' TextBox_VNAStopFrequency
         ' 
-        TextBox5.BorderStyle = BorderStyle.FixedSingle
-        TextBox5.Font = New Font("Malgun Gothic", 14F)
-        TextBox5.Location = New Point(202, 2)
-        TextBox5.Margin = New Padding(2)
-        TextBox5.Name = "TextBox5"
-        TextBox5.Size = New Size(96, 45)
-        TextBox5.TabIndex = 8
-        TextBox5.Text = "20"
-        TextBox5.TextAlign = HorizontalAlignment.Right
+        TextBox_VNAStopFrequency.BorderStyle = BorderStyle.FixedSingle
+        TextBox_VNAStopFrequency.Font = New Font("Malgun Gothic", 14F)
+        TextBox_VNAStopFrequency.Location = New Point(602, 2)
+        TextBox_VNAStopFrequency.Margin = New Padding(2)
+        TextBox_VNAStopFrequency.Name = "TextBox_VNAStopFrequency"
+        TextBox_VNAStopFrequency.Size = New Size(96, 45)
+        TextBox_VNAStopFrequency.TabIndex = 9
+        TextBox_VNAStopFrequency.Text = "20"
+        TextBox_VNAStopFrequency.TextAlign = HorizontalAlignment.Right
+        ' 
+        ' TextBox_VNAStartFrequency
+        ' 
+        TextBox_VNAStartFrequency.BorderStyle = BorderStyle.FixedSingle
+        TextBox_VNAStartFrequency.Font = New Font("Malgun Gothic", 14F)
+        TextBox_VNAStartFrequency.Location = New Point(202, 2)
+        TextBox_VNAStartFrequency.Margin = New Padding(2)
+        TextBox_VNAStartFrequency.Name = "TextBox_VNAStartFrequency"
+        TextBox_VNAStartFrequency.Size = New Size(96, 45)
+        TextBox_VNAStartFrequency.TabIndex = 8
+        TextBox_VNAStartFrequency.Text = "20"
+        TextBox_VNAStartFrequency.TextAlign = HorizontalAlignment.Right
         ' 
         ' Label28
         ' 
@@ -570,36 +620,36 @@ Partial Class Form1
         ' 
         Label29.AutoSize = True
         Label29.Dock = DockStyle.Fill
-        Label29.Location = New Point(383, 0)
+        Label29.Location = New Point(403, 0)
         Label29.Name = "Label29"
         Label29.Size = New Size(194, 50)
         Label29.TabIndex = 1
         Label29.Text = "Stop Frequency:"
         Label29.TextAlign = ContentAlignment.MiddleRight
         ' 
-        ' ComboBox1
+        ' ComboBox_VNAStartFrequencyUnit
         ' 
-        ComboBox1.Dock = DockStyle.Fill
-        ComboBox1.Font = New Font("Malgun Gothic", 14F)
-        ComboBox1.FormattingEnabled = True
-        ComboBox1.Items.AddRange(New Object() {"Hz", "kHz", "MHz", "GHz"})
-        ComboBox1.Location = New Point(301, 1)
-        ComboBox1.Margin = New Padding(1)
-        ComboBox1.Name = "ComboBox1"
-        ComboBox1.Size = New Size(78, 46)
-        ComboBox1.TabIndex = 10
+        ComboBox_VNAStartFrequencyUnit.Dock = DockStyle.Fill
+        ComboBox_VNAStartFrequencyUnit.Font = New Font("Malgun Gothic", 14F)
+        ComboBox_VNAStartFrequencyUnit.FormattingEnabled = True
+        ComboBox_VNAStartFrequencyUnit.Items.AddRange(New Object() {"Hz", "kHz", "MHz", "GHz"})
+        ComboBox_VNAStartFrequencyUnit.Location = New Point(301, 1)
+        ComboBox_VNAStartFrequencyUnit.Margin = New Padding(1)
+        ComboBox_VNAStartFrequencyUnit.Name = "ComboBox_VNAStartFrequencyUnit"
+        ComboBox_VNAStartFrequencyUnit.Size = New Size(98, 46)
+        ComboBox_VNAStartFrequencyUnit.TabIndex = 10
         ' 
-        ' ComboBox2
+        ' ComboBox_VNAStopFrequencyUnit
         ' 
-        ComboBox2.Dock = DockStyle.Fill
-        ComboBox2.Font = New Font("Malgun Gothic", 14F)
-        ComboBox2.FormattingEnabled = True
-        ComboBox2.Items.AddRange(New Object() {"Hz", "kHz", "MHz", "GHz"})
-        ComboBox2.Location = New Point(681, 1)
-        ComboBox2.Margin = New Padding(1)
-        ComboBox2.Name = "ComboBox2"
-        ComboBox2.Size = New Size(78, 46)
-        ComboBox2.TabIndex = 11
+        ComboBox_VNAStopFrequencyUnit.Dock = DockStyle.Fill
+        ComboBox_VNAStopFrequencyUnit.Font = New Font("Malgun Gothic", 14F)
+        ComboBox_VNAStopFrequencyUnit.FormattingEnabled = True
+        ComboBox_VNAStopFrequencyUnit.Items.AddRange(New Object() {"Hz", "kHz", "MHz", "GHz"})
+        ComboBox_VNAStopFrequencyUnit.Location = New Point(701, 1)
+        ComboBox_VNAStopFrequencyUnit.Margin = New Padding(1)
+        ComboBox_VNAStopFrequencyUnit.Name = "ComboBox_VNAStopFrequencyUnit"
+        ComboBox_VNAStopFrequencyUnit.Size = New Size(98, 46)
+        ComboBox_VNAStopFrequencyUnit.TabIndex = 11
         ' 
         ' TableLayoutPanel24
         ' 
@@ -615,7 +665,7 @@ Partial Class Form1
         TableLayoutPanel24.Controls.Add(Label31, 3, 0)
         TableLayoutPanel24.Controls.Add(Label30, 0, 0)
         TableLayoutPanel24.Controls.Add(TableLayoutPanel25, 1, 0)
-        TableLayoutPanel24.Controls.Add(ComboBox3, 4, 0)
+        TableLayoutPanel24.Controls.Add(ComboBox_VNANumberOfPoints, 4, 0)
         TableLayoutPanel24.Dock = DockStyle.Fill
         TableLayoutPanel24.Location = New Point(50, 100)
         TableLayoutPanel24.Margin = New Padding(0)
@@ -657,8 +707,8 @@ Partial Class Form1
         TableLayoutPanel25.ColumnCount = 2
         TableLayoutPanel25.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 55F))
         TableLayoutPanel25.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 45F))
-        TableLayoutPanel25.Controls.Add(RadioButton1, 0, 0)
-        TableLayoutPanel25.Controls.Add(RadioButton2, 1, 0)
+        TableLayoutPanel25.Controls.Add(RadioButton_VNASweepLinear, 0, 0)
+        TableLayoutPanel25.Controls.Add(RadioButton_VNASweepLog, 1, 0)
         TableLayoutPanel25.Dock = DockStyle.Fill
         TableLayoutPanel25.Location = New Point(100, 0)
         TableLayoutPanel25.Margin = New Padding(0)
@@ -668,47 +718,47 @@ Partial Class Form1
         TableLayoutPanel25.Size = New Size(200, 50)
         TableLayoutPanel25.TabIndex = 10
         ' 
-        ' RadioButton1
+        ' RadioButton_VNASweepLinear
         ' 
-        RadioButton1.AutoSize = True
-        RadioButton1.Checked = True
-        RadioButton1.Dock = DockStyle.Fill
-        RadioButton1.Location = New Point(3, 3)
-        RadioButton1.Name = "RadioButton1"
-        RadioButton1.Size = New Size(104, 44)
-        RadioButton1.TabIndex = 0
-        RadioButton1.TabStop = True
-        RadioButton1.Text = "Linear"
-        RadioButton1.UseVisualStyleBackColor = True
+        RadioButton_VNASweepLinear.AutoSize = True
+        RadioButton_VNASweepLinear.Checked = True
+        RadioButton_VNASweepLinear.Dock = DockStyle.Fill
+        RadioButton_VNASweepLinear.Location = New Point(3, 3)
+        RadioButton_VNASweepLinear.Name = "RadioButton_VNASweepLinear"
+        RadioButton_VNASweepLinear.Size = New Size(104, 44)
+        RadioButton_VNASweepLinear.TabIndex = 0
+        RadioButton_VNASweepLinear.TabStop = True
+        RadioButton_VNASweepLinear.Text = "Linear"
+        RadioButton_VNASweepLinear.UseVisualStyleBackColor = True
         ' 
-        ' RadioButton2
+        ' RadioButton_VNASweepLog
         ' 
-        RadioButton2.AutoSize = True
-        RadioButton2.Dock = DockStyle.Fill
-        RadioButton2.Location = New Point(113, 3)
-        RadioButton2.Name = "RadioButton2"
-        RadioButton2.Size = New Size(84, 44)
-        RadioButton2.TabIndex = 1
-        RadioButton2.Text = "Log"
-        RadioButton2.UseVisualStyleBackColor = True
+        RadioButton_VNASweepLog.AutoSize = True
+        RadioButton_VNASweepLog.Dock = DockStyle.Fill
+        RadioButton_VNASweepLog.Location = New Point(113, 3)
+        RadioButton_VNASweepLog.Name = "RadioButton_VNASweepLog"
+        RadioButton_VNASweepLog.Size = New Size(84, 44)
+        RadioButton_VNASweepLog.TabIndex = 1
+        RadioButton_VNASweepLog.Text = "Log"
+        RadioButton_VNASweepLog.UseVisualStyleBackColor = True
         ' 
-        ' ComboBox3
+        ' ComboBox_VNANumberOfPoints
         ' 
-        ComboBox3.Dock = DockStyle.Fill
-        ComboBox3.Font = New Font("Malgun Gothic", 14F, FontStyle.Regular, GraphicsUnit.Point, CByte(129))
-        ComboBox3.FormattingEnabled = True
-        ComboBox3.Items.AddRange(New Object() {"51", "101", "201", "401", "801", "1601", "2048", "3201", "4096", "6401", "12801", "16501"})
-        ComboBox3.Location = New Point(553, 3)
-        ComboBox3.Name = "ComboBox3"
-        ComboBox3.Size = New Size(194, 46)
-        ComboBox3.TabIndex = 12
+        ComboBox_VNANumberOfPoints.Dock = DockStyle.Fill
+        ComboBox_VNANumberOfPoints.Font = New Font("Malgun Gothic", 14F, FontStyle.Regular, GraphicsUnit.Point, CByte(129))
+        ComboBox_VNANumberOfPoints.FormattingEnabled = True
+        ComboBox_VNANumberOfPoints.Items.AddRange(New Object() {"51", "101", "201", "401", "801", "1601", "2048", "3201", "4096", "6401", "12801", "16501"})
+        ComboBox_VNANumberOfPoints.Location = New Point(553, 3)
+        ComboBox_VNANumberOfPoints.Name = "ComboBox_VNANumberOfPoints"
+        ComboBox_VNANumberOfPoints.Size = New Size(194, 46)
+        ComboBox_VNANumberOfPoints.TabIndex = 12
         ' 
         ' Label25
         ' 
         Label25.AutoSize = True
         Label25.BackColor = Color.Silver
         Label25.Dock = DockStyle.Fill
-        Label25.Location = New Point(3, 381)
+        Label25.Location = New Point(3, 319)
         Label25.Margin = New Padding(3)
         Label25.Name = "Label25"
         Label25.Size = New Size(1150, 6)
@@ -719,7 +769,7 @@ Partial Class Form1
         Label9.AutoSize = True
         Label9.BackColor = Color.Silver
         Label9.Dock = DockStyle.Fill
-        Label9.Location = New Point(3, 217)
+        Label9.Location = New Point(3, 155)
         Label9.Margin = New Padding(3)
         Label9.Name = "Label9"
         Label9.Size = New Size(1150, 6)
@@ -740,12 +790,12 @@ Partial Class Form1
         TableLayoutPanel18.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel18.Controls.Add(Label4, 0, 0)
         TableLayoutPanel18.Controls.Add(Label5, 1, 0)
-        TableLayoutPanel18.Controls.Add(Button1, 3, 0)
-        TableLayoutPanel18.Controls.Add(Button2, 4, 0)
-        TableLayoutPanel18.Controls.Add(Button3, 5, 0)
-        TableLayoutPanel18.Controls.Add(Button4, 8, 0)
+        TableLayoutPanel18.Controls.Add(Button_VNACalOPEN, 3, 0)
+        TableLayoutPanel18.Controls.Add(Button_VNACalSHORT, 4, 0)
+        TableLayoutPanel18.Controls.Add(Button_VNACalLOAD, 5, 0)
+        TableLayoutPanel18.Controls.Add(Button_VNALoadCalFile, 8, 0)
         TableLayoutPanel18.Dock = DockStyle.Fill
-        TableLayoutPanel18.Location = New Point(0, 0)
+        TableLayoutPanel18.Location = New Point(0, 328)
         TableLayoutPanel18.Margin = New Padding(0)
         TableLayoutPanel18.Name = "TableLayoutPanel18"
         TableLayoutPanel18.RowCount = 1
@@ -765,7 +815,7 @@ Partial Class Form1
         Label4.Name = "Label4"
         Label4.Size = New Size(50, 50)
         Label4.TabIndex = 0
-        Label4.Text = "1"
+        Label4.Text = "3"
         Label4.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' Label5
@@ -780,67 +830,67 @@ Partial Class Form1
         Label5.Text = "VNA Calibration"
         Label5.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Button1
+        ' Button_VNACalOPEN
         ' 
-        Button1.BackColor = Color.Silver
-        Button1.Dock = DockStyle.Fill
-        Button1.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
-        Button1.ForeColor = Color.DimGray
-        Button1.Location = New Point(271, 1)
-        Button1.Margin = New Padding(1)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(148, 48)
-        Button1.TabIndex = 2
-        Button1.Text = "OPEN"
-        Button1.UseVisualStyleBackColor = False
+        Button_VNACalOPEN.BackColor = Color.Silver
+        Button_VNACalOPEN.Dock = DockStyle.Fill
+        Button_VNACalOPEN.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
+        Button_VNACalOPEN.ForeColor = Color.DimGray
+        Button_VNACalOPEN.Location = New Point(271, 1)
+        Button_VNACalOPEN.Margin = New Padding(1)
+        Button_VNACalOPEN.Name = "Button_VNACalOPEN"
+        Button_VNACalOPEN.Size = New Size(148, 48)
+        Button_VNACalOPEN.TabIndex = 2
+        Button_VNACalOPEN.Text = "OPEN"
+        Button_VNACalOPEN.UseVisualStyleBackColor = False
         ' 
-        ' Button2
+        ' Button_VNACalSHORT
         ' 
-        Button2.BackColor = Color.Silver
-        Button2.Dock = DockStyle.Fill
-        Button2.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
-        Button2.ForeColor = Color.DimGray
-        Button2.Location = New Point(421, 1)
-        Button2.Margin = New Padding(1)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(148, 48)
-        Button2.TabIndex = 3
-        Button2.Text = "SHORT"
-        Button2.UseVisualStyleBackColor = False
+        Button_VNACalSHORT.BackColor = Color.Silver
+        Button_VNACalSHORT.Dock = DockStyle.Fill
+        Button_VNACalSHORT.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
+        Button_VNACalSHORT.ForeColor = Color.DimGray
+        Button_VNACalSHORT.Location = New Point(421, 1)
+        Button_VNACalSHORT.Margin = New Padding(1)
+        Button_VNACalSHORT.Name = "Button_VNACalSHORT"
+        Button_VNACalSHORT.Size = New Size(148, 48)
+        Button_VNACalSHORT.TabIndex = 3
+        Button_VNACalSHORT.Text = "SHORT"
+        Button_VNACalSHORT.UseVisualStyleBackColor = False
         ' 
-        ' Button3
+        ' Button_VNACalLOAD
         ' 
-        Button3.BackColor = Color.Silver
-        Button3.Dock = DockStyle.Fill
-        Button3.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
-        Button3.ForeColor = Color.DimGray
-        Button3.Location = New Point(571, 1)
-        Button3.Margin = New Padding(1)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(148, 48)
-        Button3.TabIndex = 4
-        Button3.Text = "LOAD"
-        Button3.UseVisualStyleBackColor = False
+        Button_VNACalLOAD.BackColor = Color.Silver
+        Button_VNACalLOAD.Dock = DockStyle.Fill
+        Button_VNACalLOAD.Font = New Font("Malgun Gothic", 11F, FontStyle.Bold)
+        Button_VNACalLOAD.ForeColor = Color.DimGray
+        Button_VNACalLOAD.Location = New Point(571, 1)
+        Button_VNACalLOAD.Margin = New Padding(1)
+        Button_VNACalLOAD.Name = "Button_VNACalLOAD"
+        Button_VNACalLOAD.Size = New Size(148, 48)
+        Button_VNACalLOAD.TabIndex = 4
+        Button_VNACalLOAD.Text = "LOAD"
+        Button_VNACalLOAD.UseVisualStyleBackColor = False
         ' 
-        ' Button4
+        ' Button_VNALoadCalFile
         ' 
-        Button4.BackColor = Color.WhiteSmoke
-        Button4.Dock = DockStyle.Fill
-        Button4.FlatAppearance.BorderColor = Color.Black
-        Button4.Location = New Point(957, 1)
-        Button4.Margin = New Padding(1)
-        Button4.Name = "Button4"
-        Button4.Size = New Size(198, 48)
-        Button4.TabIndex = 5
-        Button4.Text = "Load the Cal File"
-        Button4.UseVisualStyleBackColor = False
+        Button_VNALoadCalFile.BackColor = Color.WhiteSmoke
+        Button_VNALoadCalFile.Dock = DockStyle.Fill
+        Button_VNALoadCalFile.FlatAppearance.BorderColor = Color.Black
+        Button_VNALoadCalFile.Location = New Point(957, 1)
+        Button_VNALoadCalFile.Margin = New Padding(1)
+        Button_VNALoadCalFile.Name = "Button_VNALoadCalFile"
+        Button_VNALoadCalFile.Size = New Size(198, 48)
+        Button_VNALoadCalFile.TabIndex = 5
+        Button_VNALoadCalFile.Text = "Load the Cal File"
+        Button_VNALoadCalFile.UseVisualStyleBackColor = False
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
         Label6.BackColor = Color.Silver
         Label6.Dock = DockStyle.Fill
-        Label6.Location = New Point(3, 53)
+        Label6.Location = New Point(3, 381)
         Label6.Margin = New Padding(3)
         Label6.Name = "Label6"
         Label6.Size = New Size(1150, 6)
@@ -857,7 +907,7 @@ Partial Class Form1
         TableLayoutPanel19.Controls.Add(TableLayoutPanel20, 1, 1)
         TableLayoutPanel19.Controls.Add(TableLayoutPanel21, 1, 2)
         TableLayoutPanel19.Dock = DockStyle.Fill
-        TableLayoutPanel19.Location = New Point(0, 62)
+        TableLayoutPanel19.Location = New Point(0, 0)
         TableLayoutPanel19.Margin = New Padding(0)
         TableLayoutPanel19.Name = "TableLayoutPanel19"
         TableLayoutPanel19.RowCount = 4
@@ -892,7 +942,7 @@ Partial Class Form1
         Label7.Name = "Label7"
         Label7.Size = New Size(50, 50)
         Label7.TabIndex = 1
-        Label7.Text = "2"
+        Label7.Text = "1"
         Label7.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' TableLayoutPanel20
@@ -911,8 +961,8 @@ Partial Class Form1
         TableLayoutPanel20.Controls.Add(ComboBox_PWRCH, 0, 0)
         TableLayoutPanel20.Controls.Add(Label10, 2, 0)
         TableLayoutPanel20.Controls.Add(Label11, 4, 0)
-        TableLayoutPanel20.Controls.Add(TextBox1, 3, 0)
-        TableLayoutPanel20.Controls.Add(Button_CHECKPWR, 8, 0)
+        TableLayoutPanel20.Controls.Add(TextBox_PWRCC, 3, 0)
+        TableLayoutPanel20.Controls.Add(Button_PWRSetupCheck, 8, 0)
         TableLayoutPanel20.Dock = DockStyle.Fill
         TableLayoutPanel20.Location = New Point(50, 50)
         TableLayoutPanel20.Margin = New Padding(0)
@@ -959,33 +1009,33 @@ Partial Class Form1
         Label11.Text = "A"
         Label11.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' TextBox1
+        ' TextBox_PWRCC
         ' 
-        TextBox1.BorderStyle = BorderStyle.FixedSingle
-        TextBox1.Dock = DockStyle.Fill
-        TextBox1.Font = New Font("Malgun Gothic", 14F, FontStyle.Regular, GraphicsUnit.Point, CByte(129))
-        TextBox1.Location = New Point(253, 3)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(144, 45)
-        TextBox1.TabIndex = 3
-        TextBox1.Text = "0.100"
-        TextBox1.TextAlign = HorizontalAlignment.Right
+        TextBox_PWRCC.BorderStyle = BorderStyle.FixedSingle
+        TextBox_PWRCC.Dock = DockStyle.Fill
+        TextBox_PWRCC.Font = New Font("Malgun Gothic", 14F, FontStyle.Regular, GraphicsUnit.Point, CByte(129))
+        TextBox_PWRCC.Location = New Point(253, 3)
+        TextBox_PWRCC.Name = "TextBox_PWRCC"
+        TextBox_PWRCC.Size = New Size(144, 45)
+        TextBox_PWRCC.TabIndex = 3
+        TextBox_PWRCC.Text = "0.100"
+        TextBox_PWRCC.TextAlign = HorizontalAlignment.Right
         ' 
-        ' Button_CHECKPWR
+        ' Button_PWRSetupCheck
         ' 
-        Button_CHECKPWR.BackColor = Color.Gold
-        Button_CHECKPWR.Dock = DockStyle.Fill
-        Button_CHECKPWR.FlatAppearance.BorderColor = Color.Black
-        Button_CHECKPWR.FlatAppearance.BorderSize = 3
-        Button_CHECKPWR.FlatStyle = FlatStyle.Flat
-        Button_CHECKPWR.ForeColor = Color.Black
-        Button_CHECKPWR.Location = New Point(957, 1)
-        Button_CHECKPWR.Margin = New Padding(1)
-        Button_CHECKPWR.Name = "Button_CHECKPWR"
-        Button_CHECKPWR.Size = New Size(148, 48)
-        Button_CHECKPWR.TabIndex = 4
-        Button_CHECKPWR.Text = "CHECK"
-        Button_CHECKPWR.UseVisualStyleBackColor = False
+        Button_PWRSetupCheck.BackColor = Color.Gold
+        Button_PWRSetupCheck.Dock = DockStyle.Fill
+        Button_PWRSetupCheck.FlatAppearance.BorderColor = Color.Black
+        Button_PWRSetupCheck.FlatAppearance.BorderSize = 3
+        Button_PWRSetupCheck.FlatStyle = FlatStyle.Flat
+        Button_PWRSetupCheck.ForeColor = Color.Black
+        Button_PWRSetupCheck.Location = New Point(957, 1)
+        Button_PWRSetupCheck.Margin = New Padding(1)
+        Button_PWRSetupCheck.Name = "Button_PWRSetupCheck"
+        Button_PWRSetupCheck.Size = New Size(148, 48)
+        Button_PWRSetupCheck.TabIndex = 4
+        Button_PWRSetupCheck.Text = "CHECK"
+        Button_PWRSetupCheck.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel21
         ' 
@@ -1008,10 +1058,10 @@ Partial Class Form1
         TableLayoutPanel21.Controls.Add(Label17, 5, 0)
         TableLayoutPanel21.Controls.Add(Label22, 6, 0)
         TableLayoutPanel21.Controls.Add(Label23, 8, 0)
-        TableLayoutPanel21.Controls.Add(Label24, 9, 0)
-        TableLayoutPanel21.Controls.Add(TextBox2, 1, 0)
-        TableLayoutPanel21.Controls.Add(TextBox3, 4, 0)
-        TableLayoutPanel21.Controls.Add(TextBox4, 7, 0)
+        TableLayoutPanel21.Controls.Add(Label_PWRStep, 9, 0)
+        TableLayoutPanel21.Controls.Add(TextBox_PWRBiasStart, 1, 0)
+        TableLayoutPanel21.Controls.Add(TextBox_PWRBiasStop, 4, 0)
+        TableLayoutPanel21.Controls.Add(TextBox_PWRCount, 7, 0)
         TableLayoutPanel21.Dock = DockStyle.Fill
         TableLayoutPanel21.Location = New Point(50, 100)
         TableLayoutPanel21.Margin = New Padding(0)
@@ -1099,56 +1149,56 @@ Partial Class Form1
         Label23.Text = "STEP:"
         Label23.TextAlign = ContentAlignment.MiddleRight
         ' 
-        ' Label24
+        ' Label_PWRStep
         ' 
-        Label24.AutoSize = True
-        Label24.BackColor = Color.White
-        Label24.BorderStyle = BorderStyle.FixedSingle
-        Label24.Dock = DockStyle.Fill
-        Label24.Font = New Font("Malgun Gothic", 14F)
-        Label24.Location = New Point(883, 3)
-        Label24.Margin = New Padding(3)
-        Label24.Name = "Label24"
-        Label24.Size = New Size(114, 44)
-        Label24.TabIndex = 6
-        Label24.Text = "0"
-        Label24.TextAlign = ContentAlignment.MiddleCenter
+        Label_PWRStep.AutoSize = True
+        Label_PWRStep.BackColor = Color.White
+        Label_PWRStep.BorderStyle = BorderStyle.FixedSingle
+        Label_PWRStep.Dock = DockStyle.Fill
+        Label_PWRStep.Font = New Font("Malgun Gothic", 14F)
+        Label_PWRStep.Location = New Point(883, 3)
+        Label_PWRStep.Margin = New Padding(3)
+        Label_PWRStep.Name = "Label_PWRStep"
+        Label_PWRStep.Size = New Size(114, 44)
+        Label_PWRStep.TabIndex = 6
+        Label_PWRStep.Text = "0"
+        Label_PWRStep.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' TextBox2
+        ' TextBox_PWRBiasStart
         ' 
-        TextBox2.BorderStyle = BorderStyle.FixedSingle
-        TextBox2.Font = New Font("Malgun Gothic", 14F)
-        TextBox2.Location = New Point(122, 2)
-        TextBox2.Margin = New Padding(2)
-        TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(96, 45)
-        TextBox2.TabIndex = 7
-        TextBox2.Text = "20"
-        TextBox2.TextAlign = HorizontalAlignment.Right
+        TextBox_PWRBiasStart.BorderStyle = BorderStyle.FixedSingle
+        TextBox_PWRBiasStart.Font = New Font("Malgun Gothic", 14F)
+        TextBox_PWRBiasStart.Location = New Point(122, 2)
+        TextBox_PWRBiasStart.Margin = New Padding(2)
+        TextBox_PWRBiasStart.Name = "TextBox_PWRBiasStart"
+        TextBox_PWRBiasStart.Size = New Size(96, 45)
+        TextBox_PWRBiasStart.TabIndex = 7
+        TextBox_PWRBiasStart.Text = "20"
+        TextBox_PWRBiasStart.TextAlign = HorizontalAlignment.Right
         ' 
-        ' TextBox3
+        ' TextBox_PWRBiasStop
         ' 
-        TextBox3.BorderStyle = BorderStyle.FixedSingle
-        TextBox3.Font = New Font("Malgun Gothic", 14F)
-        TextBox3.Location = New Point(392, 2)
-        TextBox3.Margin = New Padding(2)
-        TextBox3.Name = "TextBox3"
-        TextBox3.Size = New Size(96, 45)
-        TextBox3.TabIndex = 8
-        TextBox3.Text = "-20"
-        TextBox3.TextAlign = HorizontalAlignment.Right
+        TextBox_PWRBiasStop.BorderStyle = BorderStyle.FixedSingle
+        TextBox_PWRBiasStop.Font = New Font("Malgun Gothic", 14F)
+        TextBox_PWRBiasStop.Location = New Point(392, 2)
+        TextBox_PWRBiasStop.Margin = New Padding(2)
+        TextBox_PWRBiasStop.Name = "TextBox_PWRBiasStop"
+        TextBox_PWRBiasStop.Size = New Size(96, 45)
+        TextBox_PWRBiasStop.TabIndex = 8
+        TextBox_PWRBiasStop.Text = "-20"
+        TextBox_PWRBiasStop.TextAlign = HorizontalAlignment.Right
         ' 
-        ' TextBox4
+        ' TextBox_PWRCount
         ' 
-        TextBox4.BorderStyle = BorderStyle.FixedSingle
-        TextBox4.Font = New Font("Malgun Gothic", 14F)
-        TextBox4.Location = New Point(662, 2)
-        TextBox4.Margin = New Padding(2)
-        TextBox4.Name = "TextBox4"
-        TextBox4.Size = New Size(96, 45)
-        TextBox4.TabIndex = 9
-        TextBox4.Text = "161"
-        TextBox4.TextAlign = HorizontalAlignment.Right
+        TextBox_PWRCount.BorderStyle = BorderStyle.FixedSingle
+        TextBox_PWRCount.Font = New Font("Malgun Gothic", 14F)
+        TextBox_PWRCount.Location = New Point(662, 2)
+        TextBox_PWRCount.Margin = New Padding(2)
+        TextBox_PWRCount.Name = "TextBox_PWRCount"
+        TextBox_PWRCount.Size = New Size(96, 45)
+        TextBox_PWRCount.TabIndex = 9
+        TextBox_PWRCount.Text = "161"
+        TextBox_PWRCount.TextAlign = HorizontalAlignment.Right
         ' 
         ' TabPage1
         ' 
@@ -1157,7 +1207,7 @@ Partial Class Form1
         TabPage1.Location = New Point(4, 34)
         TabPage1.Name = "TabPage1"
         TabPage1.Padding = New Padding(3)
-        TabPage1.Size = New Size(1164, 560)
+        TabPage1.Size = New Size(1164, 605)
         TabPage1.TabIndex = 0
         TabPage1.Text = "Power Supply"
         TabPage1.UseVisualStyleBackColor = True
@@ -1178,7 +1228,7 @@ Partial Class Form1
         TableLayoutPanel_PS.RowCount = 2
         TableLayoutPanel_PS.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
         TableLayoutPanel_PS.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel_PS.Size = New Size(1156, 552)
+        TableLayoutPanel_PS.Size = New Size(1156, 597)
         TableLayoutPanel_PS.TabIndex = 0
         ' 
         ' GroupBox1
@@ -1187,7 +1237,7 @@ Partial Class Form1
         GroupBox1.Dock = DockStyle.Fill
         GroupBox1.Location = New Point(3, 48)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(379, 501)
+        GroupBox1.Size = New Size(379, 546)
         GroupBox1.TabIndex = 1
         GroupBox1.TabStop = False
         GroupBox1.Text = "CH1"
@@ -1206,7 +1256,7 @@ Partial Class Form1
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 60F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 40F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
-        TableLayoutPanel1.Size = New Size(373, 465)
+        TableLayoutPanel1.Size = New Size(373, 510)
         TableLayoutPanel1.TabIndex = 0
         ' 
         ' TableLayoutPanel2
@@ -1225,7 +1275,7 @@ Partial Class Form1
         TableLayoutPanel2.RowCount = 2
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel2.Size = New Size(373, 252)
+        TableLayoutPanel2.Size = New Size(373, 279)
         TableLayoutPanel2.TabIndex = 0
         ' 
         ' Label_DISP_UNIT_CURR_CH1
@@ -1234,9 +1284,9 @@ Partial Class Form1
         Label_DISP_UNIT_CURR_CH1.BackColor = Color.Azure
         Label_DISP_UNIT_CURR_CH1.Dock = DockStyle.Fill
         Label_DISP_UNIT_CURR_CH1.Font = New Font("Malgun Gothic", 18F)
-        Label_DISP_UNIT_CURR_CH1.Location = New Point(296, 126)
+        Label_DISP_UNIT_CURR_CH1.Location = New Point(296, 139)
         Label_DISP_UNIT_CURR_CH1.Name = "Label_DISP_UNIT_CURR_CH1"
-        Label_DISP_UNIT_CURR_CH1.Size = New Size(74, 126)
+        Label_DISP_UNIT_CURR_CH1.Size = New Size(74, 140)
         Label_DISP_UNIT_CURR_CH1.TabIndex = 3
         Label_DISP_UNIT_CURR_CH1.Text = "A"
         Label_DISP_UNIT_CURR_CH1.TextAlign = ContentAlignment.MiddleCenter
@@ -1249,7 +1299,7 @@ Partial Class Form1
         Label_DISP_UNIT_VOLT_CH1.Font = New Font("Malgun Gothic", 18F)
         Label_DISP_UNIT_VOLT_CH1.Location = New Point(296, 0)
         Label_DISP_UNIT_VOLT_CH1.Name = "Label_DISP_UNIT_VOLT_CH1"
-        Label_DISP_UNIT_VOLT_CH1.Size = New Size(74, 126)
+        Label_DISP_UNIT_VOLT_CH1.Size = New Size(74, 139)
         Label_DISP_UNIT_VOLT_CH1.TabIndex = 2
         Label_DISP_UNIT_VOLT_CH1.Text = "V"
         Label_DISP_UNIT_VOLT_CH1.TextAlign = ContentAlignment.MiddleCenter
@@ -1262,7 +1312,7 @@ Partial Class Form1
         Label_DISP_VOLT_CH1.Font = New Font("Malgun Gothic", 11F)
         Label_DISP_VOLT_CH1.Location = New Point(3, 0)
         Label_DISP_VOLT_CH1.Name = "Label_DISP_VOLT_CH1"
-        Label_DISP_VOLT_CH1.Size = New Size(287, 126)
+        Label_DISP_VOLT_CH1.Size = New Size(287, 139)
         Label_DISP_VOLT_CH1.TabIndex = 4
         Label_DISP_VOLT_CH1.Text = "0.000"
         Label_DISP_VOLT_CH1.TextAlign = ContentAlignment.MiddleRight
@@ -1273,9 +1323,9 @@ Partial Class Form1
         Label_DISP_CURR_CH1.BackColor = Color.Azure
         Label_DISP_CURR_CH1.Dock = DockStyle.Fill
         Label_DISP_CURR_CH1.Font = New Font("Malgun Gothic", 11F)
-        Label_DISP_CURR_CH1.Location = New Point(3, 126)
+        Label_DISP_CURR_CH1.Location = New Point(3, 139)
         Label_DISP_CURR_CH1.Name = "Label_DISP_CURR_CH1"
-        Label_DISP_CURR_CH1.Size = New Size(287, 126)
+        Label_DISP_CURR_CH1.Size = New Size(287, 140)
         Label_DISP_CURR_CH1.TabIndex = 5
         Label_DISP_CURR_CH1.Text = "0.000"
         Label_DISP_CURR_CH1.TextAlign = ContentAlignment.MiddleRight
@@ -1293,13 +1343,13 @@ Partial Class Form1
         TableLayoutPanel3.Controls.Add(TextBox_SET_VOLT_CH1, 1, 0)
         TableLayoutPanel3.Controls.Add(TextBox_SET_CURR_CH1, 1, 1)
         TableLayoutPanel3.Dock = DockStyle.Fill
-        TableLayoutPanel3.Location = New Point(0, 252)
+        TableLayoutPanel3.Location = New Point(0, 279)
         TableLayoutPanel3.Margin = New Padding(0)
         TableLayoutPanel3.Name = "TableLayoutPanel3"
         TableLayoutPanel3.RowCount = 2
         TableLayoutPanel3.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel3.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel3.Size = New Size(373, 168)
+        TableLayoutPanel3.Size = New Size(373, 186)
         TableLayoutPanel3.TabIndex = 1
         ' 
         ' Button_SET_CH1
@@ -1309,7 +1359,7 @@ Partial Class Form1
         Button_SET_CH1.Location = New Point(4, 4)
         Button_SET_CH1.Name = "Button_SET_CH1"
         TableLayoutPanel3.SetRowSpan(Button_SET_CH1, 2)
-        Button_SET_CH1.Size = New Size(114, 160)
+        Button_SET_CH1.Size = New Size(114, 178)
         Button_SET_CH1.TabIndex = 0
         Button_SET_CH1.Text = "SET"
         Button_SET_CH1.UseVisualStyleBackColor = True
@@ -1321,7 +1371,7 @@ Partial Class Form1
         Label2.Font = New Font("Malgun Gothic", 18F)
         Label2.Location = New Point(325, 1)
         Label2.Name = "Label2"
-        Label2.Size = New Size(44, 82)
+        Label2.Size = New Size(44, 91)
         Label2.TabIndex = 1
         Label2.Text = "V"
         Label2.TextAlign = ContentAlignment.MiddleCenter
@@ -1331,9 +1381,9 @@ Partial Class Form1
         Label3.AutoSize = True
         Label3.Dock = DockStyle.Fill
         Label3.Font = New Font("Malgun Gothic", 18F)
-        Label3.Location = New Point(325, 84)
+        Label3.Location = New Point(325, 93)
         Label3.Name = "Label3"
-        Label3.Size = New Size(44, 83)
+        Label3.Size = New Size(44, 92)
         Label3.TabIndex = 2
         Label3.Text = "A"
         Label3.TextAlign = ContentAlignment.MiddleCenter
@@ -1343,7 +1393,7 @@ Partial Class Form1
         TextBox_SET_VOLT_CH1.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_VOLT_CH1.BorderStyle = BorderStyle.None
         TextBox_SET_VOLT_CH1.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_VOLT_CH1.Location = New Point(127, 10)
+        TextBox_SET_VOLT_CH1.Location = New Point(127, 14)
         TextBox_SET_VOLT_CH1.Margin = New Padding(5)
         TextBox_SET_VOLT_CH1.Name = "TextBox_SET_VOLT_CH1"
         TextBox_SET_VOLT_CH1.Size = New Size(189, 64)
@@ -1356,7 +1406,7 @@ Partial Class Form1
         TextBox_SET_CURR_CH1.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_CURR_CH1.BorderStyle = BorderStyle.None
         TextBox_SET_CURR_CH1.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_CURR_CH1.Location = New Point(127, 93)
+        TextBox_SET_CURR_CH1.Location = New Point(127, 107)
         TextBox_SET_CURR_CH1.Margin = New Padding(5)
         TextBox_SET_CURR_CH1.Name = "TextBox_SET_CURR_CH1"
         TextBox_SET_CURR_CH1.Size = New Size(189, 64)
@@ -1372,7 +1422,7 @@ Partial Class Form1
         TableLayoutPanel4.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
         TableLayoutPanel4.Controls.Add(Button_OUTP_CH1, 1, 0)
         TableLayoutPanel4.Dock = DockStyle.Fill
-        TableLayoutPanel4.Location = New Point(0, 420)
+        TableLayoutPanel4.Location = New Point(0, 465)
         TableLayoutPanel4.Margin = New Padding(0)
         TableLayoutPanel4.Name = "TableLayoutPanel4"
         TableLayoutPanel4.RowCount = 1
@@ -1398,7 +1448,7 @@ Partial Class Form1
         GroupBox2.Dock = DockStyle.Fill
         GroupBox2.Location = New Point(388, 48)
         GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(379, 501)
+        GroupBox2.Size = New Size(379, 546)
         GroupBox2.TabIndex = 2
         GroupBox2.TabStop = False
         GroupBox2.Text = "CH2"
@@ -1417,7 +1467,7 @@ Partial Class Form1
         TableLayoutPanel5.RowStyles.Add(New RowStyle(SizeType.Percent, 60F))
         TableLayoutPanel5.RowStyles.Add(New RowStyle(SizeType.Percent, 40F))
         TableLayoutPanel5.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
-        TableLayoutPanel5.Size = New Size(373, 465)
+        TableLayoutPanel5.Size = New Size(373, 510)
         TableLayoutPanel5.TabIndex = 1
         ' 
         ' TableLayoutPanel6
@@ -1436,7 +1486,7 @@ Partial Class Form1
         TableLayoutPanel6.RowCount = 2
         TableLayoutPanel6.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel6.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel6.Size = New Size(373, 252)
+        TableLayoutPanel6.Size = New Size(373, 279)
         TableLayoutPanel6.TabIndex = 0
         ' 
         ' Label_DISP_UNIT_CURR_CH2
@@ -1445,9 +1495,9 @@ Partial Class Form1
         Label_DISP_UNIT_CURR_CH2.BackColor = Color.Azure
         Label_DISP_UNIT_CURR_CH2.Dock = DockStyle.Fill
         Label_DISP_UNIT_CURR_CH2.Font = New Font("Malgun Gothic", 18F)
-        Label_DISP_UNIT_CURR_CH2.Location = New Point(296, 126)
+        Label_DISP_UNIT_CURR_CH2.Location = New Point(296, 139)
         Label_DISP_UNIT_CURR_CH2.Name = "Label_DISP_UNIT_CURR_CH2"
-        Label_DISP_UNIT_CURR_CH2.Size = New Size(74, 126)
+        Label_DISP_UNIT_CURR_CH2.Size = New Size(74, 140)
         Label_DISP_UNIT_CURR_CH2.TabIndex = 3
         Label_DISP_UNIT_CURR_CH2.Text = "A"
         Label_DISP_UNIT_CURR_CH2.TextAlign = ContentAlignment.MiddleCenter
@@ -1460,7 +1510,7 @@ Partial Class Form1
         Label_DISP_UNIT_VOLT_CH2.Font = New Font("Malgun Gothic", 18F)
         Label_DISP_UNIT_VOLT_CH2.Location = New Point(296, 0)
         Label_DISP_UNIT_VOLT_CH2.Name = "Label_DISP_UNIT_VOLT_CH2"
-        Label_DISP_UNIT_VOLT_CH2.Size = New Size(74, 126)
+        Label_DISP_UNIT_VOLT_CH2.Size = New Size(74, 139)
         Label_DISP_UNIT_VOLT_CH2.TabIndex = 2
         Label_DISP_UNIT_VOLT_CH2.Text = "V"
         Label_DISP_UNIT_VOLT_CH2.TextAlign = ContentAlignment.MiddleCenter
@@ -1473,7 +1523,7 @@ Partial Class Form1
         Label_DISP_VOLT_CH2.Font = New Font("Malgun Gothic", 11F)
         Label_DISP_VOLT_CH2.Location = New Point(3, 0)
         Label_DISP_VOLT_CH2.Name = "Label_DISP_VOLT_CH2"
-        Label_DISP_VOLT_CH2.Size = New Size(287, 126)
+        Label_DISP_VOLT_CH2.Size = New Size(287, 139)
         Label_DISP_VOLT_CH2.TabIndex = 4
         Label_DISP_VOLT_CH2.Text = "0.000"
         Label_DISP_VOLT_CH2.TextAlign = ContentAlignment.MiddleRight
@@ -1484,9 +1534,9 @@ Partial Class Form1
         Label_DISP_CURR_CH2.BackColor = Color.Azure
         Label_DISP_CURR_CH2.Dock = DockStyle.Fill
         Label_DISP_CURR_CH2.Font = New Font("Malgun Gothic", 11F)
-        Label_DISP_CURR_CH2.Location = New Point(3, 126)
+        Label_DISP_CURR_CH2.Location = New Point(3, 139)
         Label_DISP_CURR_CH2.Name = "Label_DISP_CURR_CH2"
-        Label_DISP_CURR_CH2.Size = New Size(287, 126)
+        Label_DISP_CURR_CH2.Size = New Size(287, 140)
         Label_DISP_CURR_CH2.TabIndex = 5
         Label_DISP_CURR_CH2.Text = "0.000"
         Label_DISP_CURR_CH2.TextAlign = ContentAlignment.MiddleRight
@@ -1504,13 +1554,13 @@ Partial Class Form1
         TableLayoutPanel7.Controls.Add(TextBox_SET_VOLT_CH2, 1, 0)
         TableLayoutPanel7.Controls.Add(TextBox_SET_CURR_CH2, 1, 1)
         TableLayoutPanel7.Dock = DockStyle.Fill
-        TableLayoutPanel7.Location = New Point(0, 252)
+        TableLayoutPanel7.Location = New Point(0, 279)
         TableLayoutPanel7.Margin = New Padding(0)
         TableLayoutPanel7.Name = "TableLayoutPanel7"
         TableLayoutPanel7.RowCount = 2
         TableLayoutPanel7.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel7.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel7.Size = New Size(373, 168)
+        TableLayoutPanel7.Size = New Size(373, 186)
         TableLayoutPanel7.TabIndex = 1
         ' 
         ' Button_SET_CH2
@@ -1520,7 +1570,7 @@ Partial Class Form1
         Button_SET_CH2.Location = New Point(4, 4)
         Button_SET_CH2.Name = "Button_SET_CH2"
         TableLayoutPanel7.SetRowSpan(Button_SET_CH2, 2)
-        Button_SET_CH2.Size = New Size(114, 160)
+        Button_SET_CH2.Size = New Size(114, 178)
         Button_SET_CH2.TabIndex = 0
         Button_SET_CH2.Text = "SET"
         Button_SET_CH2.UseVisualStyleBackColor = True
@@ -1532,7 +1582,7 @@ Partial Class Form1
         Label12.Font = New Font("Malgun Gothic", 18F)
         Label12.Location = New Point(325, 1)
         Label12.Name = "Label12"
-        Label12.Size = New Size(44, 82)
+        Label12.Size = New Size(44, 91)
         Label12.TabIndex = 1
         Label12.Text = "V"
         Label12.TextAlign = ContentAlignment.MiddleCenter
@@ -1542,9 +1592,9 @@ Partial Class Form1
         Label13.AutoSize = True
         Label13.Dock = DockStyle.Fill
         Label13.Font = New Font("Malgun Gothic", 18F)
-        Label13.Location = New Point(325, 84)
+        Label13.Location = New Point(325, 93)
         Label13.Name = "Label13"
-        Label13.Size = New Size(44, 83)
+        Label13.Size = New Size(44, 92)
         Label13.TabIndex = 2
         Label13.Text = "A"
         Label13.TextAlign = ContentAlignment.MiddleCenter
@@ -1554,7 +1604,7 @@ Partial Class Form1
         TextBox_SET_VOLT_CH2.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_VOLT_CH2.BorderStyle = BorderStyle.None
         TextBox_SET_VOLT_CH2.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_VOLT_CH2.Location = New Point(127, 10)
+        TextBox_SET_VOLT_CH2.Location = New Point(127, 14)
         TextBox_SET_VOLT_CH2.Margin = New Padding(5)
         TextBox_SET_VOLT_CH2.Name = "TextBox_SET_VOLT_CH2"
         TextBox_SET_VOLT_CH2.Size = New Size(189, 64)
@@ -1567,7 +1617,7 @@ Partial Class Form1
         TextBox_SET_CURR_CH2.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_CURR_CH2.BorderStyle = BorderStyle.None
         TextBox_SET_CURR_CH2.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_CURR_CH2.Location = New Point(127, 93)
+        TextBox_SET_CURR_CH2.Location = New Point(127, 107)
         TextBox_SET_CURR_CH2.Margin = New Padding(5)
         TextBox_SET_CURR_CH2.Name = "TextBox_SET_CURR_CH2"
         TextBox_SET_CURR_CH2.Size = New Size(189, 64)
@@ -1583,7 +1633,7 @@ Partial Class Form1
         TableLayoutPanel8.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
         TableLayoutPanel8.Controls.Add(Button_OUTP_CH2, 1, 0)
         TableLayoutPanel8.Dock = DockStyle.Fill
-        TableLayoutPanel8.Location = New Point(0, 420)
+        TableLayoutPanel8.Location = New Point(0, 465)
         TableLayoutPanel8.Margin = New Padding(0)
         TableLayoutPanel8.Name = "TableLayoutPanel8"
         TableLayoutPanel8.RowCount = 1
@@ -1609,7 +1659,7 @@ Partial Class Form1
         GroupBox3.Dock = DockStyle.Fill
         GroupBox3.Location = New Point(773, 48)
         GroupBox3.Name = "GroupBox3"
-        GroupBox3.Size = New Size(380, 501)
+        GroupBox3.Size = New Size(380, 546)
         GroupBox3.TabIndex = 3
         GroupBox3.TabStop = False
         GroupBox3.Text = "CH3"
@@ -1628,7 +1678,7 @@ Partial Class Form1
         TableLayoutPanel9.RowStyles.Add(New RowStyle(SizeType.Percent, 60F))
         TableLayoutPanel9.RowStyles.Add(New RowStyle(SizeType.Percent, 40F))
         TableLayoutPanel9.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
-        TableLayoutPanel9.Size = New Size(374, 465)
+        TableLayoutPanel9.Size = New Size(374, 510)
         TableLayoutPanel9.TabIndex = 1
         ' 
         ' TableLayoutPanel10
@@ -1647,7 +1697,7 @@ Partial Class Form1
         TableLayoutPanel10.RowCount = 2
         TableLayoutPanel10.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel10.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel10.Size = New Size(374, 252)
+        TableLayoutPanel10.Size = New Size(374, 279)
         TableLayoutPanel10.TabIndex = 0
         ' 
         ' Label_DISP_UNIT_CURR_CH3
@@ -1656,9 +1706,9 @@ Partial Class Form1
         Label_DISP_UNIT_CURR_CH3.BackColor = Color.Azure
         Label_DISP_UNIT_CURR_CH3.Dock = DockStyle.Fill
         Label_DISP_UNIT_CURR_CH3.Font = New Font("Malgun Gothic", 18F)
-        Label_DISP_UNIT_CURR_CH3.Location = New Point(297, 126)
+        Label_DISP_UNIT_CURR_CH3.Location = New Point(297, 139)
         Label_DISP_UNIT_CURR_CH3.Name = "Label_DISP_UNIT_CURR_CH3"
-        Label_DISP_UNIT_CURR_CH3.Size = New Size(74, 126)
+        Label_DISP_UNIT_CURR_CH3.Size = New Size(74, 140)
         Label_DISP_UNIT_CURR_CH3.TabIndex = 3
         Label_DISP_UNIT_CURR_CH3.Text = "A"
         Label_DISP_UNIT_CURR_CH3.TextAlign = ContentAlignment.MiddleCenter
@@ -1671,7 +1721,7 @@ Partial Class Form1
         Label_DISP_UNIT_VOLT_CH3.Font = New Font("Malgun Gothic", 18F)
         Label_DISP_UNIT_VOLT_CH3.Location = New Point(297, 0)
         Label_DISP_UNIT_VOLT_CH3.Name = "Label_DISP_UNIT_VOLT_CH3"
-        Label_DISP_UNIT_VOLT_CH3.Size = New Size(74, 126)
+        Label_DISP_UNIT_VOLT_CH3.Size = New Size(74, 139)
         Label_DISP_UNIT_VOLT_CH3.TabIndex = 2
         Label_DISP_UNIT_VOLT_CH3.Text = "V"
         Label_DISP_UNIT_VOLT_CH3.TextAlign = ContentAlignment.MiddleCenter
@@ -1684,7 +1734,7 @@ Partial Class Form1
         Label_DISP_VOLT_CH3.Font = New Font("Malgun Gothic", 11F)
         Label_DISP_VOLT_CH3.Location = New Point(3, 0)
         Label_DISP_VOLT_CH3.Name = "Label_DISP_VOLT_CH3"
-        Label_DISP_VOLT_CH3.Size = New Size(288, 126)
+        Label_DISP_VOLT_CH3.Size = New Size(288, 139)
         Label_DISP_VOLT_CH3.TabIndex = 4
         Label_DISP_VOLT_CH3.Text = "0.000"
         Label_DISP_VOLT_CH3.TextAlign = ContentAlignment.MiddleRight
@@ -1695,9 +1745,9 @@ Partial Class Form1
         Label_DISP_CURR_CH3.BackColor = Color.Azure
         Label_DISP_CURR_CH3.Dock = DockStyle.Fill
         Label_DISP_CURR_CH3.Font = New Font("Malgun Gothic", 11F)
-        Label_DISP_CURR_CH3.Location = New Point(3, 126)
+        Label_DISP_CURR_CH3.Location = New Point(3, 139)
         Label_DISP_CURR_CH3.Name = "Label_DISP_CURR_CH3"
-        Label_DISP_CURR_CH3.Size = New Size(288, 126)
+        Label_DISP_CURR_CH3.Size = New Size(288, 140)
         Label_DISP_CURR_CH3.TabIndex = 5
         Label_DISP_CURR_CH3.Text = "0.000"
         Label_DISP_CURR_CH3.TextAlign = ContentAlignment.MiddleRight
@@ -1715,13 +1765,13 @@ Partial Class Form1
         TableLayoutPanel11.Controls.Add(TextBox_SET_VOLT_CH3, 1, 0)
         TableLayoutPanel11.Controls.Add(TextBox_SET_CURR_CH3, 1, 1)
         TableLayoutPanel11.Dock = DockStyle.Fill
-        TableLayoutPanel11.Location = New Point(0, 252)
+        TableLayoutPanel11.Location = New Point(0, 279)
         TableLayoutPanel11.Margin = New Padding(0)
         TableLayoutPanel11.Name = "TableLayoutPanel11"
         TableLayoutPanel11.RowCount = 2
         TableLayoutPanel11.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
         TableLayoutPanel11.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel11.Size = New Size(374, 168)
+        TableLayoutPanel11.Size = New Size(374, 186)
         TableLayoutPanel11.TabIndex = 1
         ' 
         ' Button_SET_CH3
@@ -1731,7 +1781,7 @@ Partial Class Form1
         Button_SET_CH3.Location = New Point(4, 4)
         Button_SET_CH3.Name = "Button_SET_CH3"
         TableLayoutPanel11.SetRowSpan(Button_SET_CH3, 2)
-        Button_SET_CH3.Size = New Size(114, 160)
+        Button_SET_CH3.Size = New Size(114, 178)
         Button_SET_CH3.TabIndex = 0
         Button_SET_CH3.Text = "SET"
         Button_SET_CH3.UseVisualStyleBackColor = True
@@ -1743,7 +1793,7 @@ Partial Class Form1
         Label18.Font = New Font("Malgun Gothic", 18F)
         Label18.Location = New Point(326, 1)
         Label18.Name = "Label18"
-        Label18.Size = New Size(44, 82)
+        Label18.Size = New Size(44, 91)
         Label18.TabIndex = 1
         Label18.Text = "V"
         Label18.TextAlign = ContentAlignment.MiddleCenter
@@ -1753,9 +1803,9 @@ Partial Class Form1
         Label19.AutoSize = True
         Label19.Dock = DockStyle.Fill
         Label19.Font = New Font("Malgun Gothic", 18F)
-        Label19.Location = New Point(326, 84)
+        Label19.Location = New Point(326, 93)
         Label19.Name = "Label19"
-        Label19.Size = New Size(44, 83)
+        Label19.Size = New Size(44, 92)
         Label19.TabIndex = 2
         Label19.Text = "A"
         Label19.TextAlign = ContentAlignment.MiddleCenter
@@ -1765,7 +1815,7 @@ Partial Class Form1
         TextBox_SET_VOLT_CH3.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_VOLT_CH3.BorderStyle = BorderStyle.None
         TextBox_SET_VOLT_CH3.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_VOLT_CH3.Location = New Point(127, 10)
+        TextBox_SET_VOLT_CH3.Location = New Point(127, 14)
         TextBox_SET_VOLT_CH3.Margin = New Padding(5)
         TextBox_SET_VOLT_CH3.Name = "TextBox_SET_VOLT_CH3"
         TextBox_SET_VOLT_CH3.Size = New Size(190, 64)
@@ -1778,7 +1828,7 @@ Partial Class Form1
         TextBox_SET_CURR_CH3.Anchor = AnchorStyles.Left Or AnchorStyles.Right
         TextBox_SET_CURR_CH3.BorderStyle = BorderStyle.None
         TextBox_SET_CURR_CH3.Font = New Font("Malgun Gothic", 24F)
-        TextBox_SET_CURR_CH3.Location = New Point(127, 93)
+        TextBox_SET_CURR_CH3.Location = New Point(127, 107)
         TextBox_SET_CURR_CH3.Margin = New Padding(5)
         TextBox_SET_CURR_CH3.Name = "TextBox_SET_CURR_CH3"
         TextBox_SET_CURR_CH3.Size = New Size(190, 64)
@@ -1794,7 +1844,7 @@ Partial Class Form1
         TableLayoutPanel12.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
         TableLayoutPanel12.Controls.Add(Button_OUTP_CH3, 1, 0)
         TableLayoutPanel12.Dock = DockStyle.Fill
-        TableLayoutPanel12.Location = New Point(0, 420)
+        TableLayoutPanel12.Location = New Point(0, 465)
         TableLayoutPanel12.Margin = New Padding(0)
         TableLayoutPanel12.Name = "TableLayoutPanel12"
         TableLayoutPanel12.RowCount = 1
@@ -1832,7 +1882,7 @@ Partial Class Form1
         TabPage2.Location = New Point(4, 34)
         TabPage2.Name = "TabPage2"
         TabPage2.Padding = New Padding(3)
-        TabPage2.Size = New Size(1164, 560)
+        TabPage2.Size = New Size(1164, 605)
         TabPage2.TabIndex = 1
         TabPage2.Text = "VNA"
         TabPage2.UseVisualStyleBackColor = True
@@ -1853,7 +1903,7 @@ Partial Class Form1
         TableLayoutPanel15.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
         TableLayoutPanel15.RowStyles.Add(New RowStyle(SizeType.Absolute, 45F))
         TableLayoutPanel15.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel15.Size = New Size(1156, 552)
+        TableLayoutPanel15.Size = New Size(1156, 597)
         TableLayoutPanel15.TabIndex = 0
         ' 
         ' TableLayoutPanel16
@@ -1975,6 +2025,8 @@ Partial Class Form1
         Text = "Instrument Automation"
         MenuStrip_Main.ResumeLayout(False)
         MenuStrip_Main.PerformLayout()
+        StatusStrip_Main.ResumeLayout(False)
+        StatusStrip_Main.PerformLayout()
         TableLayoutPanel_Main.ResumeLayout(False)
         TableLayoutPanel14.ResumeLayout(False)
         TableLayoutPanel14.PerformLayout()
@@ -2109,10 +2161,10 @@ Partial Class Form1
     Friend WithEvents TableLayoutPanel18 As TableLayoutPanel
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
+    Friend WithEvents Button_VNACalOPEN As Button
+    Friend WithEvents Button_VNACalSHORT As Button
+    Friend WithEvents Button_VNACalLOAD As Button
+    Friend WithEvents Button_VNALoadCalFile As Button
     Friend WithEvents Label6 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents TableLayoutPanel19 As TableLayoutPanel
@@ -2122,8 +2174,8 @@ Partial Class Form1
     Friend WithEvents ComboBox_PWRCH As ComboBox
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Button_CHECKPWR As Button
+    Friend WithEvents TextBox_PWRCC As TextBox
+    Friend WithEvents Button_PWRSetupCheck As Button
     Friend WithEvents TableLayoutPanel21 As TableLayoutPanel
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
@@ -2131,34 +2183,38 @@ Partial Class Form1
     Friend WithEvents Label17 As Label
     Friend WithEvents Label22 As Label
     Friend WithEvents Label23 As Label
-    Friend WithEvents Label24 As Label
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents Label_PWRStep As Label
+    Friend WithEvents TextBox_PWRBiasStart As TextBox
+    Friend WithEvents TextBox_PWRBiasStop As TextBox
+    Friend WithEvents TextBox_PWRCount As TextBox
     Friend WithEvents Label25 As Label
     Friend WithEvents TableLayoutPanel22 As TableLayoutPanel
     Friend WithEvents Label26 As Label
     Friend WithEvents Label27 As Label
     Friend WithEvents TableLayoutPanel23 As TableLayoutPanel
-    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents TextBox_VNAStartFrequency As TextBox
     Friend WithEvents Label28 As Label
     Friend WithEvents Label29 As Label
     Friend WithEvents TableLayoutPanel24 As TableLayoutPanel
     Friend WithEvents Label30 As Label
-    Friend WithEvents TextBox9 As TextBox
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents TextBox_VNAStopFrequency As TextBox
+    Friend WithEvents ComboBox_VNAStartFrequencyUnit As ComboBox
+    Friend WithEvents ComboBox_VNAStopFrequencyUnit As ComboBox
     Friend WithEvents TableLayoutPanel25 As TableLayoutPanel
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton_VNASweepLinear As RadioButton
+    Friend WithEvents RadioButton_VNASweepLog As RadioButton
     Friend WithEvents Label31 As Label
-    Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents ComboBox_VNANumberOfPoints As ComboBox
     Friend WithEvents TableLayoutPanel26 As TableLayoutPanel
     Friend WithEvents Label32 As Label
     Friend WithEvents Label33 As Label
     Friend WithEvents TableLayoutPanel27 As TableLayoutPanel
-    Friend WithEvents Label35 As Label
-    Friend WithEvents Button5 As Button
+    Friend WithEvents Label_DefaultDIR As Label
+    Friend WithEvents Button_DefaultDIR As Button
     Friend WithEvents Label34 As Label
+    Friend WithEvents Button6 As Button
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel_Status As ToolStripStatusLabel
+    Friend WithEvents Button_VNASetupCheck As Button
 
 End Class

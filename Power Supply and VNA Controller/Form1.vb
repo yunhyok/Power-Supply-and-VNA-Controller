@@ -13,9 +13,11 @@ Imports System.Threading
 Imports System.Windows.Forms.Application
 Imports System.Timers
 Imports System.Web
+Imports System.Environment
 Imports System.Globalization
 Imports System.Runtime.CompilerServices
 Imports Microsoft.ApplicationInsights.Extensibility
+Imports System.ServiceModel
 
 
 
@@ -38,6 +40,15 @@ Public Class Form1
     Private AutomationInterface As New BodeAutomation
 
     Private Bode100 As BodeDevice
+    Private myOnePortMeasuremnt As OnePortMeasurement
+
+    Private myOPMIsConfigured As Boolean = False
+
+    Private CalFileName As String
+    Private LoadCalFileUsage As Boolean = False
+    Private CalOPEN As Boolean = False
+    Private CalSHORT As Boolean = False
+    Private CalLOAD As Boolean = False
 
     Sub New()
 
@@ -531,5 +542,337 @@ Public Class Form1
         End If
 
 
+    End Sub
+
+    Private Sub Button_CONN_VNA_Click(sender As Object, e As EventArgs) Handles Button_CONN_VNA.Click
+        If VNAisConnected Then
+
+            Try
+                Bode100.ShutDown()
+
+                With Button_CONN_VNA
+                    .BackColor = Color.LightGray
+                    .Font = New Font(.Font, FontStyle.Regular)
+                End With
+                VNAisConnected = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+
+        Else
+            Try
+                Dim devices As String() = AutomationInterface.ScanForFreeDevices
+
+                If devices.Count > 0 Then
+                    Dim autoConnection As BodeAutomationInterface = New BodeAutomation
+
+                    Bode100 = autoConnection.Connect
+                    Label_VNA_ID.Text = Bode100.SerialNumber
+
+
+                    With Button_CONN_VNA
+                        .BackColor = Color.GreenYellow
+                        .Font = New Font(.Font, FontStyle.Bold)
+                    End With
+
+                    VNAisConnected = True
+                Else
+                    MsgBox("No VNA is found.")
+                End If
+
+
+            Catch ex As Exception
+                MsgBox("Error connecting to VNA: " & ex.Message)
+
+            End Try
+        End If
+
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Dim setupFileName As String = "setup.ini"
+        If File.Exists(setupFileName) Then
+
+            Using sr As New StreamReader(setupFileName)
+
+                With sr
+                    TextBox_ADDR_PWRSPL.Text = sr.ReadLine.Split(vbTab)(1)
+                    TextBox_ADDR_VNA.Text = sr.ReadLine.Split(vbTab)(1)
+                    ComboBox_PWRCH.SelectedIndex = CInt(sr.ReadLine.Split(vbTab)(1))
+                    TextBox_PWRCC.Text = sr.ReadLine.Split(vbTab)(1)
+                    TextBox_PWRBiasStart.Text = sr.ReadLine.Split(vbTab)(1)
+                    TextBox_PWRBiasStop.Text = sr.ReadLine.Split(vbTab)(1)
+                    TextBox_PWRCount.Text = sr.ReadLine.Split(vbTab)(1)
+                    TextBox_VNAStartFrequency.Text = sr.ReadLine.Split(vbTab)(1)
+                    ComboBox_VNAStartFrequencyUnit.SelectedIndex = CInt(sr.ReadLine.Split(vbTab)(1))
+                    TextBox_VNAStopFrequency.Text = sr.ReadLine.Split(vbTab)(1)
+                    ComboBox_VNAStopFrequencyUnit.SelectedIndex = CInt(sr.ReadLine.Split(vbTab)(1))
+                    RadioButton_VNASweepLinear.Checked = CBool(sr.ReadLine.Split(vbTab)(1))
+                    RadioButton_VNASweepLog.Checked = CBool(sr.ReadLine.Split(vbTab)(1))
+                    ComboBox_VNANumberOfPoints.SelectedIndex = CInt(sr.ReadLine.Split(vbTab)(1))
+                    Label_DefaultDIR.Text = sr.ReadLine.Split(vbTab)(1)
+
+                    GetVStep()
+
+                End With
+                sr.Close()
+            End Using
+        Else
+            ComboBox_PWRCH.SelectedIndex = 1
+            TextBox_PWRCC.Text = "0.100"
+            TextBox_PWRBiasStart.Text = "20"
+            TextBox_PWRBiasStop.Text = "-20"
+            TextBox_PWRCount.Text = "161"
+
+            Label_PWRStep.Text = GetVStep()
+
+            TextBox_VNAStartFrequency.Text = "10"
+            ComboBox_VNAStartFrequencyUnit.SelectedIndex = 0
+            TextBox_VNAStopFrequency.Text = "1"
+            ComboBox_VNAStopFrequencyUnit.SelectedIndex = 3
+
+            RadioButton_VNASweepLinear.Checked = True
+            RadioButton_VNASweepLog.Checked = False
+
+            ComboBox_VNANumberOfPoints.SelectedIndex = 5
+
+            Label_DefaultDIR.Text = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop), "MeasureData")
+
+            WriteSetupFile()
+
+        End If
+    End Sub
+
+
+    Private Function GetVStep() As String
+        Try
+            Dim startV As Decimal = CDec(TextBox_PWRBiasStart.Text)
+            Dim stopV As Decimal = CDec(TextBox_PWRBiasStop.Text)
+            Dim count As Integer = CInt(TextBox_PWRCount.Text)
+
+            Return ((stopV - startV) / (count - 1)).ToString("F3")
+
+        Catch ex As Exception
+            Return "Error"
+        End Try
+
+    End Function
+
+    Private Sub WriteSetupFile()
+        Dim setupFileName As String = "setup.ini"
+        Using sw As New StreamWriter(setupFileName)
+            With sw
+                .WriteLine("Power Supply Address" & vbTab & TextBox_ADDR_PWRSPL.Text)
+                .WriteLine("VNA Address" & vbTab & TextBox_ADDR_VNA.Text)
+                .WriteLine("Power Channel" & vbTab & ComboBox_PWRCH.SelectedIndex)
+                .WriteLine("Power CC" & vbTab & TextBox_PWRCC.Text)
+                .WriteLine("Bias Start" & vbTab & TextBox_PWRBiasStart.Text)
+                .WriteLine("Bias Stop" & vbTab & TextBox_PWRBiasStop.Text)
+                .WriteLine("Bias Count" & vbTab & TextBox_PWRCount.Text)
+                .WriteLine("VNA Sweep Start Frequency" & vbTab & TextBox_VNAStartFrequency.Text)
+                .WriteLine("VNA Sweep Start Unit" & vbTab & ComboBox_VNAStartFrequencyUnit.SelectedIndex)
+                .WriteLine("VNA Sweep Stop Frequency" & vbTab & TextBox_VNAStopFrequency.Text)
+                .WriteLine("VNA Sweep Stop Unit" & vbTab & ComboBox_VNAStopFrequencyUnit.SelectedIndex)
+                .WriteLine("VNA Sweep Linear Scale" & vbTab & RadioButton_VNASweepLinear.Checked.ToString)
+                .WriteLine("VNA Sweep Log Scale" & vbTab & RadioButton_VNASweepLog.Checked.ToString)
+                .WriteLine("VNA Sweep Points" & vbTab & ComboBox_VNANumberOfPoints.SelectedIndex)
+                .WriteLine("Default DIR" & vbTab & Label_DefaultDIR.Text)
+            End With
+            sw.Close()
+        End Using
+    End Sub
+
+    Private Sub Button_DefaultDIR_Click(sender As Object, e As EventArgs) Handles Button_DefaultDIR.Click
+        Dim fBD As New FolderBrowserDialog
+        With fBD
+            Dim defaultDIR As String = Label_DefaultDIR.Text
+            If Not Path.Exists(defaultDIR) Then
+                defaultDIR = GetFolderPath(SpecialFolder.Desktop)
+            End If
+
+            .InitialDirectory = defaultDIR
+
+            If .ShowDialog = DialogResult.OK Then
+                Label_DefaultDIR.Text = .SelectedPath
+            End If
+
+        End With
+    End Sub
+
+    Private Sub Button_PWRSetupCheck_Click(sender As Object, e As EventArgs) Handles Button_PWRSetupCheck.Click
+        If PWRSPLisConnected Then
+            Try
+                With DIMM_PWRSPL
+
+                    .WriteString("*CLS")
+                    ToolStripStatusLabel_Status.Text = "INIT"
+
+                    Dim ch As String = ComboBox_PWRCH.SelectedIndex + 1
+                    Dim ccERR, startERR, stopERR As String
+
+
+                    Dim opc As String = "0"
+                    While CInt(opc) <> 1
+                        DIMM_PWRSPL.WriteString("*OPC?")
+                        opc = DIMM_PWRSPL.ReadString
+                        Sleep((New Random).Next(100))
+                        DoEvents()
+                    End While
+
+                    .WriteString(String.Format("CURR {0},(@{1})", TextBox_PWRCC.Text, ch))
+                    Sleep(500)
+                    .WriteString("*ESR?")
+                    ccERR = DIMM_PWRSPL.ReadString
+
+
+                    opc = "0"
+                    While CInt(opc) <> 1
+                        DIMM_PWRSPL.WriteString("*OPC?")
+                        opc = DIMM_PWRSPL.ReadString
+                        Sleep((New Random).Next(100))
+                        DoEvents()
+                    End While
+                    .WriteString(String.Format("VOLT {0},(@{1})", Math.Abs(CDbl(TextBox_PWRBiasStart.Text)).ToString, ch))
+                    .WriteString("*ESR?")
+                    startERR = DIMM_PWRSPL.ReadString
+
+                    opc = "0"
+                    While CInt(opc) <> 1
+                        DIMM_PWRSPL.WriteString("*OPC?")
+                        opc = DIMM_PWRSPL.ReadString
+                        Sleep((New Random).Next(100))
+                        DoEvents()
+                    End While
+                    .WriteString(String.Format("VOLT {0},(@{1})", Math.Abs(CDbl(TextBox_PWRBiasStop.Text)).ToString, ch))
+                    .WriteString("*ESR?")
+                    stopERR = DIMM_PWRSPL.ReadString
+
+                    If CInt(ccERR) + CInt(startERR) + CInt(stopERR) > 0 Then
+                        Throw New Exception(String.Format("CC ERR : {0}   Start ERR : {1}   Stop ERR : {2}", ccERR, startERR, stopERR))
+                    ElseIf CInt(TextBox_PWRCount.text) > 1 Then
+                        Throw New Exception("Bias Count should be larger than 1.")
+                    Else
+                        MessageBox.Show("Power Supply Setup seems to be normal.")
+                    End If
+
+                End With
+            Catch ex As Exception
+                MessageBox.Show("Power Supply Setup Error!!" & vbCrLf & ex.Message)
+            End Try
+        Else
+            MessageBox.Show("Power Supply is not connected.")
+        End If
+    End Sub
+
+    Private Sub Button_VNASetupCheck_Click(sender As Object, e As EventArgs) Handles Button_VNASetupCheck.Click
+
+        If VNAisConnected Then
+            myOPMIsConfigured = False
+            Try
+                With Bode100
+                    myOnePortMeasuremnt = .Impedance.CreateOnePortMeasurement
+                    With myOnePortMeasuremnt
+                        Dim startFreq As Double = CDbl(TextBox_VNAStartFrequency.Text)
+                        startFreq *= 10 ^ (ComboBox_VNAStartFrequencyUnit.SelectedIndex * 3)
+                        Dim stopFreq As Double = CDbl(TextBox_VNAStopFrequency.Text)
+                        stopFreq *= 10 ^ (ComboBox_VNAStopFrequencyUnit.SelectedIndex * 3)
+                        Dim nop As Integer = CInt(ComboBox_VNANumberOfPoints.SelectedItem.ToString)
+                        Dim sweepMode As Integer = If(RadioButton_VNASweepLinear.Checked, 0, 1)
+                        .ConfigureSweep(startFreq, stopFreq, nop, sweepMode)
+                    End With
+                    myOPMIsConfigured = True
+                    MessageBox.Show("VNA setup seems to be normal.")
+                End With
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        Else
+            MessageBox.Show("VNA is not connected.")
+        End If
+    End Sub
+
+    Private Sub Button_VNACalOPEN_Click(sender As Object, e As EventArgs) Handles Button_VNACalOPEN.Click, Button_VNACalSHORT.Click, Button_VNACalLOAD.Click
+        If VNAisConnected Then
+            Dim thisButton As Button = CType(sender, Button)
+            Dim calCategory As String = thisButton.Text
+            Dim calForm As New Cal(myOnePortMeasuremnt, calCategory)
+            calForm.ShowDialog()
+            If calForm.ProcessCompleted Then
+
+                With thisButton
+                    .BackColor = Color.GreenYellow
+                    .ForeColor = Color.Black
+                    .Font = New Font(.Font, FontStyle.Bold)
+                End With
+
+                Select Case calCategory
+                    Case "OPEN"
+                        CalOPEN = True
+                    Case "SHORT"
+                        CalSHORT = True
+                    Case "LOAD"
+                        CalLOAD = True
+                End Select
+
+                If CalOPEN AndAlso CalSHORT AndAlso CalLOAD Then
+                    Dim myPath As String = Path.Combine(GetFolderPath(Environment.SpecialFolder.Desktop), "myCalibration.mcalx")
+                    If myOnePortMeasuremnt.Calibration.SaveCalibration(myPath) Then
+                        MessageBox.Show("Calibration is completed and saved at DeskTop.")
+                    Else
+                        MessageBox.Show("Failed to save the calibration result as a file.")
+                    End If
+
+                End If
+
+            End If
+        Else
+            MessageBox.Show("VNA is not connected.")
+        End If
+
+
+
+    End Sub
+
+    Private Sub Button_VNALoadCalFile_Click(sender As Object, e As EventArgs) Handles Button_VNALoadCalFile.Click
+        If VNAisConnected Then
+            Dim ofD As New OpenFileDialog
+            With ofD
+                .DefaultExt = ".mcalx"
+                .InitialDirectory = GetFolderPath(Environment.SpecialFolder.Desktop)
+            End With
+
+            If ofD.ShowDialog = DialogResult.OK Then
+                CalFileName = ofD.FileName
+                LoadCalFileUsage = True
+                If myOnePortMeasuremnt.Calibration.UserRange.LoadCalibration(CalFileName) Then
+                    CalOPEN = True
+                    CalSHORT = True
+                    CalLOAD = True
+
+                    With Button_VNACalLOAD
+                        .BackColor = Color.GreenYellow
+                        .ForeColor = Color.Black
+                        .Font = New Font(.Font, FontStyle.Bold)
+                    End With
+                    With Button_VNACalOPEN
+                        .BackColor = Color.GreenYellow
+                        .ForeColor = Color.Black
+                        .Font = New Font(.Font, FontStyle.Bold)
+                    End With
+                    With Button_VNACalSHORT
+                        .BackColor = Color.GreenYellow
+                        .ForeColor = Color.Black
+                        .Font = New Font(.Font, FontStyle.Bold)
+                    End With
+
+                    MessageBox.Show("Calibration file is loaded.")
+                Else
+                    MessageBox.Show("Failed to load the calibration file.")
+                End If
+            End If
+
+        Else
+            MessageBox.Show("VNA is not connected.")
+        End If
     End Sub
 End Class
