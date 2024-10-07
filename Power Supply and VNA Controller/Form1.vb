@@ -878,10 +878,14 @@ Public Class Form1
 
     Private Sub Button_GO_Click(sender As Object, e As EventArgs) Handles Button_GO.Click
         Button_GO.Enabled = False
+        If myOPMIsConfigured Then
+            Dim myMeasure As New Measure(myOnePortMeasuremnt, DIMM_PWRSPL, ComboBox_PWRCH.SelectedIndex + 1, CDbl(TextBox_PWRBiasStart.Text), CDbl(TextBox_PWRBiasStop.Text), CInt(TextBox_PWRCount.Text), CDbl(TextBox_PWRCC.Text), Label_DefaultDIR.Text)
 
-        Dim myMeasure As New Measure(myOnePortMeasuremnt, DIMM_PWRSPL, ComboBox_PWRCH.SelectedIndex + 1, CDbl(TextBox_PWRBiasStart.Text), CDbl(TextBox_PWRBiasStop.Text), CInt(TextBox_PWRCount.Text), CDbl(TextBox_PWRCC.Text), Label_DefaultDIR.Text)
+            myMeasure.ShowDialog()
+        Else
+            MessageBox.Show("You should configure VNA first.")
+        End If
 
-        myMeasure.ShowDialog()
 
 
         Button_GO.Enabled = True
