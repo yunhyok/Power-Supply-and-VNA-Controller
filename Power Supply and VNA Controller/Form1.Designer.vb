@@ -37,7 +37,7 @@ Partial Class Form1
         TabControl_Main = New TabControl()
         TabPage3 = New TabPage()
         TableLayoutPanel17 = New TableLayoutPanel()
-        Button6 = New Button()
+        Button_GO = New Button()
         TableLayoutPanel26 = New TableLayoutPanel()
         Label32 = New Label()
         Label33 = New Label()
@@ -342,7 +342,7 @@ Partial Class Form1
         ' 
         TableLayoutPanel17.ColumnCount = 1
         TableLayoutPanel17.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
-        TableLayoutPanel17.Controls.Add(Button6, 0, 7)
+        TableLayoutPanel17.Controls.Add(Button_GO, 0, 7)
         TableLayoutPanel17.Controls.Add(TableLayoutPanel26, 0, 6)
         TableLayoutPanel17.Controls.Add(TableLayoutPanel22, 0, 2)
         TableLayoutPanel17.Controls.Add(Label25, 0, 3)
@@ -367,18 +367,18 @@ Partial Class Form1
         TableLayoutPanel17.Size = New Size(1156, 624)
         TableLayoutPanel17.TabIndex = 0
         ' 
-        ' Button6
+        ' Button_GO
         ' 
-        Button6.BackColor = Color.Lime
-        Button6.Dock = DockStyle.Fill
-        Button6.Font = New Font("Malgun Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(129))
-        Button6.Location = New Point(1, 543)
-        Button6.Margin = New Padding(1)
-        Button6.Name = "Button6"
-        Button6.Size = New Size(1154, 80)
-        Button6.TabIndex = 7
-        Button6.Text = "GO"
-        Button6.UseVisualStyleBackColor = False
+        Button_GO.BackColor = Color.Lime
+        Button_GO.Dock = DockStyle.Fill
+        Button_GO.Font = New Font("Malgun Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(129))
+        Button_GO.Location = New Point(1, 543)
+        Button_GO.Margin = New Padding(1)
+        Button_GO.Name = "Button_GO"
+        Button_GO.Size = New Size(1154, 80)
+        Button_GO.TabIndex = 7
+        Button_GO.Text = "GO"
+        Button_GO.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel26
         ' 
@@ -2212,7 +2212,7 @@ Partial Class Form1
     Friend WithEvents Label_DefaultDIR As Label
     Friend WithEvents Button_DefaultDIR As Button
     Friend WithEvents Label34 As Label
-    Friend WithEvents Button6 As Button
+    Friend WithEvents Button_GO As Button
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel_Status As ToolStripStatusLabel
     Friend WithEvents Button_VNASetupCheck As Button

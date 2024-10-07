@@ -749,7 +749,7 @@ Public Class Form1
 
                     If CInt(ccERR) + CInt(startERR) + CInt(stopERR) > 0 Then
                         Throw New Exception(String.Format("CC ERR : {0}   Start ERR : {1}   Stop ERR : {2}", ccERR, startERR, stopERR))
-                    ElseIf CInt(TextBox_PWRCount.text) > 1 Then
+                    ElseIf CInt(TextBox_PWRCount.text) < 1 Then
                         Throw New Exception("Bias Count should be larger than 1.")
                     Else
                         MessageBox.Show("Power Supply Setup seems to be normal.")
@@ -874,5 +874,16 @@ Public Class Form1
         Else
             MessageBox.Show("VNA is not connected.")
         End If
+    End Sub
+
+    Private Sub Button_GO_Click(sender As Object, e As EventArgs) Handles Button_GO.Click
+        Button_GO.Enabled = False
+
+        Dim myMeasure As New Measure(myOnePortMeasuremnt, DIMM_PWRSPL, ComboBox_PWRCH.SelectedIndex + 1, CDbl(TextBox_PWRBiasStart.Text), CDbl(TextBox_PWRBiasStop.Text), CInt(TextBox_PWRCount.Text), CDbl(TextBox_PWRCC.Text), Label_DefaultDIR.Text)
+
+        myMeasure.ShowDialog()
+
+
+        Button_GO.Enabled = True
     End Sub
 End Class
