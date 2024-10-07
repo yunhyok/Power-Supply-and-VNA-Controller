@@ -30,6 +30,7 @@ Partial Class Measure
         Label_Progress3 = New Label()
         TableLayoutPanel3 = New TableLayoutPanel()
         Button_Go = New Button()
+        Button_Stop = New Button()
         TableLayoutPanel4 = New TableLayoutPanel()
         Label1 = New Label()
         Label2 = New Label()
@@ -149,11 +150,13 @@ Partial Class Measure
         ' 
         ' TableLayoutPanel3
         ' 
-        TableLayoutPanel3.ColumnCount = 3
+        TableLayoutPanel3.ColumnCount = 4
         TableLayoutPanel3.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
+        TableLayoutPanel3.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel3.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 200F))
         TableLayoutPanel3.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
         TableLayoutPanel3.Controls.Add(Button_Go, 1, 0)
+        TableLayoutPanel3.Controls.Add(Button_Stop, 2, 0)
         TableLayoutPanel3.Dock = DockStyle.Fill
         TableLayoutPanel3.Location = New Point(0, 474)
         TableLayoutPanel3.Margin = New Padding(0)
@@ -167,12 +170,24 @@ Partial Class Measure
         ' 
         Button_Go.Dock = DockStyle.Fill
         Button_Go.Font = New Font("Malgun Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(129))
-        Button_Go.Location = New Point(342, 3)
+        Button_Go.Location = New Point(242, 3)
         Button_Go.Name = "Button_Go"
         Button_Go.Size = New Size(194, 44)
         Button_Go.TabIndex = 0
         Button_Go.Text = "GO"
         Button_Go.UseVisualStyleBackColor = True
+        ' 
+        ' Button_Stop
+        ' 
+        Button_Stop.Dock = DockStyle.Fill
+        Button_Stop.Enabled = False
+        Button_Stop.Font = New Font("Malgun Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, CByte(129))
+        Button_Stop.Location = New Point(442, 3)
+        Button_Stop.Name = "Button_Stop"
+        Button_Stop.Size = New Size(194, 44)
+        Button_Stop.TabIndex = 1
+        Button_Stop.Text = "STOP"
+        Button_Stop.UseVisualStyleBackColor = True
         ' 
         ' TableLayoutPanel4
         ' 
@@ -477,4 +492,5 @@ Partial Class Measure
     Friend WithEvents TableLayoutPanel7 As TableLayoutPanel
     Friend WithEvents ProgressBar_Main As ProgressBar
     Friend WithEvents Label_MainStatus As Label
+    Friend WithEvents Button_Stop As Button
 End Class

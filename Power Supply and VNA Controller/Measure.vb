@@ -20,6 +20,7 @@ Imports Microsoft.AspNetCore.Mvc.Filters
 Imports VisaComLib
 
 Imports System.DateTime
+Imports System.Management
 
 Public Class Measure
 
@@ -34,6 +35,8 @@ Public Class Measure
     Private myCC As Double
 
     Private mySavePath As String
+
+    Private measureContinue As Boolean = False
 
 
     Private phase As Integer = 0
@@ -201,24 +204,87 @@ Public Class Measure
 
                 Label_MainStatus.Text = "Press Button GO" & vbCrLf & "to" & vbCrLf & "Start Measurement"
 
+            Case 3  'connection confirm
+                With TableLayoutPanel_Main
+                    With .RowStyles(1)
+                        .SizeType = SizeType.Absolute
+                        .Height = 0
+                    End With
+                    With .RowStyles(2)
+                        .SizeType = SizeType.Percent
+                        .Height = 100
+                    End With
+                    With .RowStyles(3)
+                        .SizeType = SizeType.Absolute
+                        .Height = 0
+                    End With
+                End With
 
+                Button_Go.Text = "NEXT"
+
+                If biasStep1(biasStep1.Count - 1) > 0 Then
+                    Label_PWRP.Text = "+"
+                    Label_PWRN.Text = "-"
+                Else
+                    Label_PWRP.Text = "-"
+                    Label_PWRN.Text = "+"
+                End If
+                Label_PWRNotice.Text = String.Format("Stop Bias Voltage : {0}V" &
+                                                     vbCrLf &
+                                                     "Check up power cable connections!",
+                                                     biasStep1(biasStep1.Count - 1).ToString("F3"))
+            Case 4
+                With TableLayoutPanel_Main
+                    With .RowStyles(1)
+                        .SizeType = SizeType.Absolute
+                        .Height = 0
+                    End With
+                    With .RowStyles(2)
+                        .SizeType = SizeType.Absolute
+                        .Height = 0
+                    End With
+                    With .RowStyles(3)
+                        .SizeType = SizeType.Percent
+                        .Height = 100
+                    End With
+                End With
+
+                Button_Go.Text = "GO"
+
+                Label_MainStatus.Text = "Press Button GO" & vbCrLf & "to" & vbCrLf & "Start Measurement"
             Case 5
                 Me.Close()
         End Select
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button_Go.Click
+        Button_Go.Enabled = False
         Select Case phase
             Case 0
-                phase = 1
+                phase = 1   'connection confirm
                 PanelChange(phase)
             Case 1
-                phase = 2
+                phase = 2   'status panel for measurement progress
                 PanelChange(phase)
             Case 2
+
+                Button_Stop.Enabled = True
                 phase = DoMeasure()
+                Button_Stop.Enabled = False
                 PanelChange(phase)
+            Case 3
+                phase = 4
+                PanelChange(phase)
+            Case 4
+                Button_Stop.Enabled = True
+                phase = DoMeasure()
+                Button_Stop.Enabled = False
+                PanelChange(phase)
+            Case 5
+                PanelChange(phase)
+
         End Select
+        Button_Go.Enabled = True
     End Sub
 
     Private Function DoMeasure() As Integer
@@ -227,13 +293,14 @@ Public Class Measure
 
         If phase = 2 Then
 
-            Using writer As New StreamWriter(mySavePath)
+            Using writer As New StreamWriter(mySavePath, False)
                 Dim title As String = "Time,Bias Voltage, CC, Current, category,"
                 Dim measuredFrequency As Double() = myOPM.MeasurementFrequencies
                 For i As Integer = 0 To measuredFrequency.Length - 1
                     title &= String.Format("{0}Hz{1}",
                                            measuredFrequency(i).ToString,
                                            If(i = measuredFrequency.Length - 1, Nothing, ","))
+                    DoEvents()
                 Next
 
                 writer.WriteLine(title)
@@ -242,38 +309,345 @@ Public Class Measure
 
                 For i As Integer = 0 To biasStep0.Count - 1
 
-                    myPWRSPLY.WriteString(
+                    If measureContinue Then
+                        myPWRSPLY.WriteString(
                         String.Format(
                             "VOLT {0},(@{1})", biasStep0(i).ToString, myCH.ToString))
 
-                    Sleep(100)
+                        Sleep(100)
 
-                    myPWRSPLY.WriteString(
-                        String.Format("MEAS:CURR? (@{0})",
-                                myCH.ToString))
-                    Dim measuredCurrent As String = Nothing
-                    Try
-                        measuredCurrent = myPWRSPLY.ReadString
-                    Catch ex As Exception
+                        myPWRSPLY.WriteString(
+                            String.Format("MEAS:CURR? (@{0})",
+                                    myCH.ToString))
+                        Dim measuredCurrent As String = Nothing
+                        Try
+                            measuredCurrent = myPWRSPLY.ReadString
+                        Catch ex As Exception
 
-                    End Try
+                        End Try
 
-                    With Label_MainStatus
-                        .Text = String.Format(
-                            "Step : {0}/{1}" &
-                            vbCrLf & "Bias Voltage : {2}  Measured Current : {3}" &
-                            vbCrLf & "Frequency Sweeping from {4} to {5}",
-                            (i + 1).ToString, (biasStep0.Count + biasStep1.Count).ToString,
-                            GetVoltage(biasStep0(i)), GetCurrent(measuredCurrent),
-                            GetFrequency(measuredFrequency(0)), GetFrequency(measuredFrequency(measuredFrequency.Length - 1)))
-                    End With
+                        With Label_MainStatus
+                            .Text = String.Format(
+                                "Step : {0}/{1}" &
+                                vbCrLf & "Bias Voltage : {2}  Measured Current : {3}" &
+                                vbCrLf & "Frequency Sweeping from {4} to {5}",
+                                (i + 1).ToString, (biasStep0.Count + biasStep1.Count).ToString,
+                                GetVoltage(biasStep0(i)), GetCurrent(measuredCurrent),
+                                GetFrequency(measuredFrequency(0)), GetFrequency(measuredFrequency(measuredFrequency.Length - 1)))
+                        End With
 
 
-                    myPWRSPLY.writeline(String.Format(
-                                        "VOLT {0}, (@{1})",
-                                        biasStep0.ToString, myCH.ToString))
-                    myOPM.ExecuteMeasurement()
+                        Dim measureTime As DateTime = Now
+                        Dim state As ExecutionState = myOPM.ExecuteMeasurement()
 
+                        While Not state = ExecutionState.Ok
+                            With Label_MainStatus
+                                .Invoke(
+                                    Sub()
+                                        .BackColor = If(.BackColor = Color.White, Color.LightYellow, Color.White)
+                                    End Sub)
+                            End With
+
+                            Sleep(250)
+                            DoEvents()
+                        End While
+
+                        Dim magnitude As Double() = myOPM.MeasurementResults.magnitude
+                        Dim real As Double() = myOPM.MeasurementResults.Real
+                        Dim imag As Double() = myOPM.MeasurementResults.Imaginary
+                        Dim cs As Double() = myOPM.Measurementresults.cs
+                        Dim ls As Double() = myOPM.Measurementresults.ls
+                        Dim rs As Double() = myOPM.Measurementresults.rs
+
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "MAG"))
+                        For k As Integer = 0 To magnitude.Length - 1
+                            If k = magnitude.Length - 1 Then
+                                writer.WriteLine(magnitude(k).ToString)
+                            Else
+                                writer.WriteLine(magnitude(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "REAL"))
+                        For k As Integer = 0 To real.Length - 1
+                            If k = real.Length - 1 Then
+                                writer.WriteLine(real(k).ToString)
+                            Else
+                                writer.WriteLine(real(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "IMAG"))
+                        For k As Integer = 0 To imag.Length - 1
+                            If k = imag.Length - 1 Then
+                                writer.WriteLine(imag(k).ToString)
+                            Else
+                                writer.WriteLine(imag(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Cs"))
+                        For k As Integer = 0 To cs.Length - 1
+                            If k = cs.Length - 1 Then
+                                writer.WriteLine(cs(k).ToString)
+                            Else
+                                writer.WriteLine(cs(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Ls"))
+                        For k As Integer = 0 To ls.Length - 1
+                            If k = ls.Length - 1 Then
+                                writer.WriteLine(ls(k).ToString)
+                            Else
+                                writer.WriteLine(ls(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep0(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Rs"))
+                        For k As Integer = 0 To rs.Length - 1
+                            If k = rs.Length - 1 Then
+                                writer.WriteLine(rs(k).ToString)
+                            Else
+                                writer.WriteLine(rs(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+
+                        Label_MainStatus.BackColor = Color.White
+                    Else
+                        Exit For
+                    End If
+
+                    ProgressBar_Main.Value = i
+                    DoEvents()
+                Next
+
+
+                myPWRSPLY.WriteString(String.Format("OUTP 0, (@{0})", myCH.ToString))
+                writer.Close()
+            End Using
+
+            If biasStep1.Count = 0 Then
+                Return 5
+            Else
+                Return 3
+            End If
+
+        ElseIf phase = 4 Then
+            Using writer As New StreamWriter(mySavePath, True)
+                'Dim title As String = "Time,Bias Voltage, CC, Current, category,"
+                Dim measuredFrequency As Double() = myOPM.MeasurementFrequencies
+                'For i As Integer = 0 To measuredFrequency.Length - 1
+                '    title &= String.Format("{0}Hz{1}",
+                '                           measuredFrequency(i).ToString,
+                '                           If(i = measuredFrequency.Length - 1, Nothing, ","))
+                '    DoEvents()
+                'Next
+
+                'writer.WriteLine(title)
+
+                myPWRSPLY.WriteString(String.Format("OUTP 1, (@{0})", myCH.ToString))
+
+                For i As Integer = 0 To biasStep1.Count - 1
+
+                    If measureContinue Then
+                        myPWRSPLY.WriteString(
+                        String.Format(
+                            "VOLT {0},(@{1})", biasStep1(i).ToString, myCH.ToString))
+
+                        Sleep(100)
+
+                        myPWRSPLY.WriteString(
+                            String.Format("MEAS:CURR? (@{0})",
+                                    myCH.ToString))
+                        Dim measuredCurrent As String = Nothing
+                        Try
+                            measuredCurrent = myPWRSPLY.ReadString
+                        Catch ex As Exception
+
+                        End Try
+
+                        With Label_MainStatus
+                            .Text = String.Format(
+                                "Step : {0}/{1}" &
+                                vbCrLf & "Bias Voltage : {2}  Measured Current : {3}" &
+                                vbCrLf & "Frequency Sweeping from {4} to {5}",
+                                (i + 1).ToString, (biasStep1.Count + biasStep1.Count).ToString,
+                                GetVoltage(biasStep1(i)), GetCurrent(measuredCurrent),
+                                GetFrequency(measuredFrequency(0)), GetFrequency(measuredFrequency(measuredFrequency.Length - 1)))
+                        End With
+
+
+                        Dim measureTime As DateTime = Now
+                        Dim state As ExecutionState = myOPM.ExecuteMeasurement()
+
+                        While Not state = ExecutionState.Ok
+                            With Label_MainStatus
+                                .Invoke(
+                                    Sub()
+                                        .BackColor = If(.BackColor = Color.White, Color.LightYellow, Color.White)
+                                    End Sub)
+                            End With
+
+                            Sleep(250)
+                            DoEvents()
+                        End While
+
+                        Dim magnitude As Double() = myOPM.MeasurementResults.magnitude
+                        Dim real As Double() = myOPM.MeasurementResults.Real
+                        Dim imag As Double() = myOPM.MeasurementResults.Imaginary
+                        Dim cs As Double() = myOPM.Measurementresults.cs
+                        Dim ls As Double() = myOPM.Measurementresults.ls
+                        Dim rs As Double() = myOPM.Measurementresults.rs
+
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "MAG"))
+                        For k As Integer = 0 To magnitude.Length - 1
+                            If k = magnitude.Length - 1 Then
+                                writer.WriteLine(magnitude(k).ToString)
+                            Else
+                                writer.WriteLine(magnitude(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "REAL"))
+                        For k As Integer = 0 To real.Length - 1
+                            If k = real.Length - 1 Then
+                                writer.WriteLine(real(k).ToString)
+                            Else
+                                writer.WriteLine(real(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "IMAG"))
+                        For k As Integer = 0 To imag.Length - 1
+                            If k = imag.Length - 1 Then
+                                writer.WriteLine(imag(k).ToString)
+                            Else
+                                writer.WriteLine(imag(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Cs"))
+                        For k As Integer = 0 To cs.Length - 1
+                            If k = cs.Length - 1 Then
+                                writer.WriteLine(cs(k).ToString)
+                            Else
+                                writer.WriteLine(cs(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Ls"))
+                        For k As Integer = 0 To ls.Length - 1
+                            If k = ls.Length - 1 Then
+                                writer.WriteLine(ls(k).ToString)
+                            Else
+                                writer.WriteLine(ls(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+                        writer.Write(
+                            String.Format("{0},{1},{2},{3},{5},",
+                                measureTime.ToShortTimeString,
+                                biasStep1(i).ToString,
+                                myCC,
+                                measuredCurrent,
+                                "Rs"))
+                        For k As Integer = 0 To rs.Length - 1
+                            If k = rs.Length - 1 Then
+                                writer.WriteLine(rs(k).ToString)
+                            Else
+                                writer.WriteLine(rs(k).ToString & ",")
+                            End If
+                            DoEvents()
+                        Next
+
+
+                        Label_MainStatus.BackColor = Color.White
+                    Else
+                        Exit For
+                    End If
 
                     ProgressBar_Main.Value = i
                     DoEvents()
@@ -286,11 +660,11 @@ Public Class Measure
 
 
 
-        ElseIf phase = 4 Then
-
-
+            Return 5
         End If
 
+
+        Return 5
     End Function
 
 
@@ -405,7 +779,7 @@ Public Class Measure
         End Select
     End Function
 
-
-
-
+    Private Sub Button_Stop_Click(sender As Object, e As EventArgs) Handles Button_Stop.Click
+        measureContinue = False
+    End Sub
 End Class
