@@ -484,7 +484,7 @@ Partial Class Form1
         Label34.Name = "Label34"
         Label34.Size = New Size(900, 50)
         Label34.TabIndex = 4
-        Label34.Text = "File Name Rule : 202XXXXX_BiasV.csv"
+        Label34.Text = "File Name Rule : 202XXXXX_BiasStartVtoBiasStopV_Count.csv"
         Label34.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TableLayoutPanel22
@@ -2022,7 +2022,7 @@ Partial Class Form1
         Font = New Font("Malgun Gothic", 11F, FontStyle.Regular, GraphicsUnit.Point, CByte(129))
         MainMenuStrip = MenuStrip_Main
         Name = "Form1"
-        Text = "Instrument Automation"
+        Text = "Instrument Automation - 2024-10-07"
         MenuStrip_Main.ResumeLayout(False)
         MenuStrip_Main.PerformLayout()
         StatusStrip_Main.ResumeLayout(False)

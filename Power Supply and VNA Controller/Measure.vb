@@ -21,6 +21,7 @@ Imports VisaComLib
 
 Imports System.DateTime
 Imports System.Management
+Imports System.ComponentModel.Design.Serialization
 
 Public Class Measure
 
@@ -84,10 +85,11 @@ Public Class Measure
         myCC = biasCC
 
         mySavePath = Path.Combine(savePath, String.Format(
-                                  "{0}_{1}To{2}.csv",
+                                  "{0}_{1}To{2}_{3}.csv",
                                   Today.ToShortDateString,
                                     If(biasStartV > 0, "P", "N") & Math.Abs(biasStartV).ToString("F1"),
-                                    If(biasStopV > 0, "P", "N") & Math.Abs(biasStopV).ToString("F1")))
+                                    If(biasStopV > 0, "P", "N") & Math.Abs(biasStopV).ToString("F1"),
+                                    myCount.ToString))
         If File.Exists(mySavePath) Then
             mySavePath = Path.Combine(savePath,
                                       String.Format("{0}_{1}.csv", Path.GetFileNameWithoutExtension(mySavePath), Now.ToString("HHmmss")))
@@ -319,7 +321,7 @@ Public Class Measure
                     If measureContinue Then
                         myPWRSPLY.WriteString(
                         String.Format(
-                            "VOLT {0},(@{1})", biasStep0(i).ToString, myCH.ToString))
+                            "VOLT {0},(@{1})", Math.Abs(biasStep0(i)).ToString, myCH.ToString))
 
                         Sleep(100)
 
@@ -328,7 +330,7 @@ Public Class Measure
                                     myCH.ToString))
                         Dim measuredCurrent As String = Nothing
                         Try
-                            measuredCurrent = myPWRSPLY.ReadString.TrimEnd
+                            measuredCurrent = (CDbl(myPWRSPLY.ReadString) * If(biasStep0IsPositive, 1, -1)).ToString
                         Catch ex As Exception
 
                         End Try
@@ -339,7 +341,7 @@ Public Class Measure
                                 vbCrLf & "Bias Voltage : {2}  Measured Current : {3}" &
                                 vbCrLf & "Frequency Sweeping from {4} to {5}",
                                 (i + 1).ToString, (biasStep0.Count + biasStep1.Count).ToString,
-                                biasStep0(i).ToString("F1") & "V", CDbl(measuredCurrent).ToString("F1") & "A",
+                                biasStep0(i).ToString("F3") & "V", CDbl(measuredCurrent).ToString("F6") & "A",
                                 measuredFrequency(0).ToString("F1") & "Hz", measuredFrequency(measuredFrequency.Length - 1).ToString("F1") & "Hz")
                         End With
 
@@ -470,7 +472,7 @@ Public Class Measure
                         Exit For
                     End If
 
-                    ProgressBar_Main.Value = i
+                    ProgressBar_Main.Value = i + 1
                     DoEvents()
                 Next
 
@@ -514,7 +516,7 @@ Public Class Measure
                                     myCH.ToString))
                         Dim measuredCurrent As String = Nothing
                         Try
-                            measuredCurrent = myPWRSPLY.ReadString.TrimEnd
+                            measuredCurrent = (CDbl(myPWRSPLY.ReadString) * If(biasStep1IsPositive, 1, -1)).ToString
                         Catch ex As Exception
 
                         End Try
@@ -525,7 +527,7 @@ Public Class Measure
                                 vbCrLf & "Bias Voltage : {2}  Measured Current : {3}" &
                                 vbCrLf & "Frequency Sweeping from {4} to {5}",
                                 (biasStep0.Count + i + 1).ToString, (biasStep0.Count + biasStep1.Count).ToString,
-                                biasStep1(i).ToString("F1") & "V", CDbl(measuredCurrent).ToString("F1") & "A",
+                                biasStep1(i).ToString("F3") & "V", CDbl(measuredCurrent).ToString("F6") & "A",
                                 measuredFrequency(0).ToString("F1") & "Hz", measuredFrequency(measuredFrequency.Length - 1).ToString("F1") & "Hz")
                         End With
 
@@ -656,7 +658,7 @@ Public Class Measure
                         Exit For
                     End If
 
-                    ProgressBar_Main.Value = biasStep0.Count + i
+                    ProgressBar_Main.Value = biasStep0.Count + i + 1
                     DoEvents()
                 Next
 

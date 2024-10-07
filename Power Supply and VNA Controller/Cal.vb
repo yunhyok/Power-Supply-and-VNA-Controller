@@ -63,6 +63,7 @@ Public Class Cal
                 state = OPM.Calibration.UserRange.ExecuteLoad()
         End Select
 
+        Label_Status.Text = "Wait "
         Dim dots As Integer = 0
         While OPM.Calibration.UserRange.IsActive
             Label_Status.Text = "Wait "
@@ -71,7 +72,9 @@ Public Class Cal
                 If dots = 5 Then
                     dots = 0
                 End If
+                DoEvents()
             Next
+            dots += 1
             DoEvents()
             Sleep(500)
         End While
